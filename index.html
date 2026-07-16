@@ -120,7 +120,7 @@ body.home-visible .bottom{display:none}
 
 </style>
 </head>
-<body>
+<body class="home-visible">
 <div class="app">
 <section id="home" class="screen active">
 <div class="home-shell" aria-label="SMART MATH x RARA home screen">
@@ -393,7 +393,6 @@ function startStage(stage){
  currentStage=stage;questionNo=1;stageCorrect=0;stageWrong=0;lessonCorrect=0;$('stageSummary').classList.remove('show');document.querySelector('.activity').style.display='block';const modes=WORLDS[currentWorld].modes;lessonMode=modes[(stage-1)%modes.length];showScreen('activity');newQuestion();
 }
 function completeLearningStage(){const key=currentWorld+'-'+currentStage;if(!state.learnDone.includes(key))state.learnDone.push(key);const rating=stageCorrect>=9?3:stageCorrect>=7?2:1;const coins=rating*10,xp=rating*5;state.coins+=coins;state.xp+=xp;if(state.learnDone.length%10===0)state.diamonds+=2;save();return {rating,coins,xp}}
-}
 
 function startLesson(mode){lessonMode=mode;currentStage=1;questionNo=1;stageCorrect=0;stageWrong=0;$('stageSummary').classList.remove('show');document.querySelector('.activity').style.display='block';showScreen('activity');newQuestion()}
 function newQuestion(){if(questionNo>10){finishStage();return}let q='',visual='';$('questionCounter').textContent='Question '+questionNo+' / 10';$('stageLabel').textContent='Stage '+currentStage;$('questionBar').style.width=(questionNo*10)+'%';$('questionStars').textContent='★'.repeat(stageCorrect)+'☆'.repeat(10-stageCorrect);if(lessonMode==='count'){correctAnswer=rand(1,10);q='How many apples?';visual='🍎'.repeat(correctAnswer);$('lessonTitle').textContent='COUNTING'}if(lessonMode==='add'){const a=rand(1,8),b=rand(1,8);correctAnswer=a+b;q=`${a} + ${b} = ?`;$('lessonTitle').textContent='ADDITION'}if(lessonMode==='sub'){const a=rand(3,12),b=rand(1,a);correctAnswer=a-b;q=`${a} − ${b} = ?`;$('lessonTitle').textContent='SUBTRACTION'}if(lessonMode==='number'){correctAnswer=rand(1,10);q='Tap number '+correctAnswer;$('lessonTitle').textContent='FIND NUMBER'}
@@ -533,7 +532,7 @@ function resetProgress(){if(confirm('Reset all progress?')){state={...DEFAULT,na
 renderStats();renderCard();showScreen('home');if(!localStorage.getItem('raraFamilySeen')){localStorage.setItem('raraFamilySeen','1');setTimeout(openProfileSwitcher,250)}
 const isiOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 if(isiOS){$('voiceBanner')?.classList.add('show');$('gameVoiceBanner')?.classList.add('show')}
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=4').catch(()=>{}));}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=41').catch(()=>{}));}
 </script>
 </body>
 </html>
