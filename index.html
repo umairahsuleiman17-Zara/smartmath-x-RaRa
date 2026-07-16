@@ -285,18 +285,59 @@ body.home-visible .bottom{display:none}
 
 <script>
 'use strict';
-const CHILD_DEFAULT={name:'Qaisara',age:4,avatar:'🧕',stars:120,coins:350,diamonds:25,xp:120,answered:0,correct:0,wrong:0,owned:['School'],equipped:'School',lastReward:'',voice:true,sound:true,streak:3,learnDone:[],roomOwned:[],roomPlaced:[],flashcard:1};const FAMILY_DEFAULT={activeId:'child1',profiles:{child1:{...CHILD_DEFAULT,id:'child1'}}};
-let state;try{state=JSON.parse(localStorage.getItem('raraFinalPWA'))||DEFAULT}catch(e){state={...DEFAULT}}state={...DEFAULT,...state};
+const CHILD_DEFAULT={
+  name:'Qaisara',age:4,avatar:'🧕',stars:120,coins:350,diamonds:25,xp:120,
+  answered:0,correct:0,wrong:0,owned:['School'],equipped:'School',
+  lastReward:'',voice:true,sound:true,streak:3,learnDone:[],
+  roomOwned:[],roomPlaced:[],flashcard:1
+};
+const makeChild=(data={})=>({...JSON.parse(JSON.stringify(CHILD_DEFAULT)),...data});
+const FAMILY_DEFAULT={
+  activeId:'child1',
+  profiles:{child1:makeChild({id:'child1'})}
+};
+
+let family;
+try{
+  family=JSON.parse(localStorage.getItem('raraFamilyGold'));
+}catch(e){
+  family=null;
+}
+
+/* Migrate older single-profile saves safely */
+if(!family || !family.profiles || !Object.keys(family.profiles).length){
+  let old=null;
+  try{old=JSON.parse(localStorage.getItem('raraFinalPWA'))}catch(e){}
+  family=JSON.parse(JSON.stringify(FAMILY_DEFAULT));
+  if(old && typeof old==='object'){
+    family.profiles.child1=makeChild({...old,id:'child1',age:Number(old.age)||4});
+  }
+}
+
+Object.keys(family.profiles).forEach(id=>{
+  family.profiles[id]=makeChild({...family.profiles[id],id});
+});
+if(!family.profiles[family.activeId]){
+  family.activeId=Object.keys(family.profiles)[0];
+}
+let state=family.profiles[family.activeId];
+
 let lessonMode='count',correctAnswer=0,currentQuestion='',card=state.flashcard||1,lessonCorrect=0,autoTimer=null,questionNo=1,stageCorrect=0,stageWrong=0,editingProfileId=null,selectedAge=4;
 const $=id=>document.getElementById(id),rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,shuffle=a=>[...a].sort(()=>Math.random()-.5);
-function save(){family.profiles[state.id]=state;family.activeId=state.id;try{localStorage.setItem('raraFamilyGold',JSON.stringify(family))}catch(e){}renderStats()}
+function save(){
+      if(!state.id)state.id=family.activeId||'child1';
+      family.profiles[state.id]=state;
+      family.activeId=state.id;
+      try{localStorage.setItem('raraFamilyGold',JSON.stringify(family))}catch(e){}
+      renderStats();
+    }
 function renderStats(){
  document.querySelectorAll('.starsText').forEach(x=>x.textContent=state.stars);
  document.querySelectorAll('.coinsText').forEach(x=>x.textContent=state.coins);
  $('homeStars').textContent=state.stars;$('homeCoins').textContent=state.coins;$('homeDiamonds').textContent=state.diamonds;$('avatarDiamonds')&&($('avatarDiamonds').textContent=state.diamonds);$('roomDiamonds')&&($('roomDiamonds').textContent=state.diamonds);
  $('liveName').textContent=state.name;$('settingsName').textContent=state.name;$('learnAge')&&($('learnAge').textContent=state.age);
- $('parentName').textContent=state.name+' (Age '+state.age+')';$('parentLevel').textContent=Math.floor(state.xp/100)+1;
- $('parentStars').textContent=state.stars;$('parentCoins').textContent=state.coins;$('parentAnswered').textContent=state.answered;
+ $('parentName')&&($('parentName').textContent=state.name+' (Age '+state.age+')');$('parentLevel')&&($('parentLevel').textContent=Math.floor(state.xp/100)+1);
+ $('parentStars')&&($('parentStars').textContent=state.stars);$('parentCoins')&&($('parentCoins').textContent=state.coins);$('parentAnswered')&&($('parentAnswered').textContent=state.answered);
  updateAvatar();renderParentProfiles();
  updateSettingsUI();
 }
@@ -532,7 +573,7 @@ function resetProgress(){if(confirm('Reset all progress?')){state={...DEFAULT,na
 renderStats();renderCard();showScreen('home');if(!localStorage.getItem('raraFamilySeen')){localStorage.setItem('raraFamilySeen','1');setTimeout(openProfileSwitcher,250)}
 const isiOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 if(isiOS){$('voiceBanner')?.classList.add('show');$('gameVoiceBanner')?.classList.add('show')}
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=41').catch(()=>{}));}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=421').catch(()=>{}));}
 </script>
 </body>
 </html>
