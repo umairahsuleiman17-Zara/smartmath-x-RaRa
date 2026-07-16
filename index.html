@@ -91,6 +91,30 @@ body.home-visible .bottom{display:none}
  .live-stat{font-size:10px}.live-settings{font-size:22px}
 }
 
+
+.stage-map{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:15px}
+.stage-node{min-height:72px;border-radius:18px;background:linear-gradient(#fff,#e9dcf5);box-shadow:0 5px 0 #aa8cbd;font-weight:1000;color:#54227d}
+.stage-node.locked{opacity:.45;filter:grayscale(1)}
+.stage-node.done{background:linear-gradient(#bbf7d0,#65c83c);color:#fff}
+.category-tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 0 12px;scrollbar-width:none}
+.category-tabs button{white-space:nowrap;background:#fff;color:#6d28d9;padding:10px 14px;border-radius:999px;font-weight:900}
+.category-tabs button.active{background:#7c3aed;color:#fff}
+.game-grid-more{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.room-stage{position:relative;min-height:390px;border-radius:27px;overflow:hidden;background:linear-gradient(#bfdbfe 0 58%,#f5d0a9 58%);box-shadow:0 8px 0 #ad8cc0}
+.room-wallpaper{position:absolute;inset:0 0 42% 0;background:linear-gradient(#bfdbfe,#e9d5ff)}
+.room-floor{position:absolute;left:0;right:0;bottom:0;height:42%;background:repeating-linear-gradient(90deg,#e8c28e 0 40px,#ddb57e 40px 80px)}
+.room-avatar{position:absolute;left:42%;bottom:11%;font-size:90px;z-index:5}
+.room-item{position:absolute;font-size:58px;z-index:4;filter:drop-shadow(0 4px 3px #0003)}
+.room-shop{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}
+.room-product{background:#fff;border-radius:20px;padding:14px;text-align:center;box-shadow:0 6px 0 #b29ac6}
+.room-product .ico{font-size:58px}
+.diamond-item{background:linear-gradient(#ede9fe,#ddd6fe);border:3px solid #a78bfa}
+.job-card{background:#fff;border-radius:22px;padding:14px;text-align:center;box-shadow:0 7px 0 #b29ac6}
+.job-avatar{height:210px;border-radius:22px;background:linear-gradient(#ddd6fe,#fbcfe8);display:flex;align-items:center;justify-content:center;font-size:125px;position:relative}
+.job-badge{position:absolute;right:12px;bottom:10px;font-size:60px}
+.flash-progress{width:100%;height:15px;background:#ddd6fe;border-radius:99px;overflow:hidden;margin:13px 0}.flash-progress i{display:block;height:100%;background:linear-gradient(90deg,#65c83c,#fbbf24);width:1%}
+@media(max-width:430px){.stage-map{grid-template-columns:repeat(4,1fr)}.stage-node{min-height:65px}.room-avatar{left:37%}.game-grid-more{grid-template-columns:repeat(2,1fr)}}
+
 </style>
 </head>
 <body>
@@ -114,7 +138,7 @@ body.home-visible .bottom{display:none}
 </div>
 <button class="hotspot hs-name" aria-label="Change name" onclick="openName()"></button>
 <button class="hotspot hs-reward" aria-label="Daily reward" onclick="claimReward()"></button>
-<button class="hotspot hs-room" aria-label="My room" onclick="showInfo('My Room','Room decorating will unlock with rewards.')"></button>
+<button class="hotspot hs-room" aria-label="My room" onclick="showScreen('room')"></button>
 <button class="hotspot hs-parent" aria-label="Parent dashboard" onclick="showScreen('parent')"></button>
 <button class="hotspot hs-achievements" aria-label="Achievements" onclick="showScreen('achievements')"></button>
 <button class="hotspot hs-learn" aria-label="Learn" onclick="showScreen('learn')"></button>
@@ -133,12 +157,18 @@ body.home-visible .bottom{display:none}
 </section>
 
 <section id="learn" class="screen panel">
-<div class="panel-head"><button class="back" onclick="showScreen('home')">←</button><div class="ribbon">LEARN</div><div class="stats"><span class="pill">⭐ <b class="starsText">0</b></span><span class="pill">🪙 <b class="coinsText">0</b></span></div></div>
-<div class="grid">
-<button class="tile" onclick="startLesson('count')"><div class="ico">🍎</div><h3>Counting</h3><p>Count 1–10</p></button>
-<button class="tile" onclick="startLesson('add')"><div class="ico">➕</div><h3>Addition</h3><p>Easy sums</p></button>
-<button class="tile" onclick="startLesson('sub')"><div class="ico">➖</div><h3>Subtraction</h3><p>Take away</p></button>
-<button class="tile" onclick="startLesson('number')"><div class="ico">🔎</div><h3>Find Number</h3><p>Recognise numbers</p></button>
+<div class="panel-head"><button class="back" onclick="showScreen('home')">←</button><div class="ribbon">50 LEARNING STAGES</div><div class="stats"><span class="pill">⭐ <b class="starsText">0</b></span></div></div>
+<div class="category-tabs" id="learnTabs">
+<button class="active" onclick="selectWorld('numbers',this)">🌳 Numbers</button>
+<button onclick="selectWorld('addition',this)">🏝 Addition</button>
+<button onclick="selectWorld('subtraction',this)">🏰 Subtraction</button>
+<button onclick="selectWorld('shapes',this)">🌈 Shapes</button>
+<button onclick="selectWorld('patterns',this)">🚀 Patterns</button>
+</div>
+<div class="stage" style="margin-top:0">
+<h2 id="worldTitle">🌳 Number Forest</h2>
+<p id="worldDesc">Counting, number recognition, more and less.</p>
+<div id="stageMap" class="stage-map"></div>
 </div>
 </section>
 
@@ -148,31 +178,62 @@ body.home-visible .bottom{display:none}
 </section>
 
 <section id="flash" class="screen panel">
-<div class="panel-head"><button class="back" onclick="showScreen('home')">←</button><div class="ribbon">FLASHCARDS</div><span></span></div>
-<div class="flashcard"><div id="cardNumber" class="big-number">1</div><h2 id="cardWord">One</h2><div id="cardObjects" class="visual">⭐</div><div class="controls"><button class="pill" onclick="prevCard()">← Previous</button><button class="pill" onclick="speakCard()">🔊 Speak</button><button class="pill" onclick="nextCard()">Next →</button></div></div>
+<div class="panel-head"><button class="back" onclick="showScreen('home')">←</button><div class="ribbon">FLASHCARDS 1–100</div><span></span></div>
+<div class="flashcard">
+<div style="font-weight:900">Card <span id="cardIndex">1</span> of 100</div>
+<div class="flash-progress"><i id="flashProgress"></i></div>
+<div id="cardNumber" class="big-number">1</div>
+<h2 id="cardWord">One</h2>
+<div id="cardObjects" class="visual">⭐</div>
+<div class="controls">
+<button class="pill" onclick="prevCard()">← Previous</button>
+<button class="pill" onclick="speakCard()">🔊 Speak</button>
+<button class="pill" onclick="toggleAutoPlay()">▶ <span id="autoText">Auto Play</span></button>
+<button class="pill" onclick="nextCard()">Next →</button>
+</div>
+</div>
 </section>
 
 <section id="games" class="screen panel">
-<div class="panel-head"><button class="back" onclick="showScreen('home')">←</button><div class="ribbon">MINI GAMES</div><span></span></div>
-<div id="gameVoiceBanner" class="voice-banner">🔊 Tap “Enable Voice” once on iPhone/iPad.<br><button class="pill" onclick="enableVoice()">Enable Voice</button></div><div class="grid">
+<div class="panel-head"><button class="back" onclick="showScreen('home')">←</button><div class="ribbon">FUN MINI GAMES</div><div class="stats"><span class="pill">🪙 <b class="coinsText">0</b></span></div></div>
+<div id="gameVoiceBanner" class="voice-banner">🔊 Tap “Enable Voice” once on iPhone/iPad.<br><button class="pill" onclick="enableVoice()">Enable Voice</button></div>
+<div class="game-grid-more">
 <button class="tile" onclick="startMemory()"><div class="ico">🃏</div><h3>Memory Match</h3></button>
 <button class="tile" onclick="startBalloon()"><div class="ico">🎈</div><h3>Balloon Pop</h3></button>
-<button class="tile" onclick="startShape()"><div class="ico">🔺🟢</div><h3>Shape Match</h3></button>
+<button class="tile" onclick="startShape()"><div class="ico">🔺</div><h3>Shape Match</h3></button>
 <button class="tile" onclick="startQuickMath()"><div class="ico">⚡</div><h3>Quick Math</h3></button>
+<button class="tile" onclick="startMissingNumber()"><div class="ico">❓</div><h3>Missing Number</h3></button>
+<button class="tile" onclick="startMoreLess()"><div class="ico">⚖️</div><h3>More or Less</h3></button>
+<button class="tile" onclick="startDiceCount()"><div class="ico">🎲</div><h3>Dice Count</h3></button>
+<button class="tile" onclick="startColorMatch()"><div class="ico">🎨</div><h3>Colour Match</h3></button>
+<button class="tile" onclick="startAnimalCount()"><div class="ico">🐣</div><h3>Animal Count</h3></button>
+<button class="tile" onclick="startTreasureBox()"><div class="ico">🎁</div><h3>Treasure Box</h3></button>
 </div>
-<div id="gameArea" class="stage"><div style="font-size:58px">🎮</div><h2>Choose a game above</h2></div>
+<div id="gameArea" class="stage"><div style="font-size:58px">🎮</div><h2>Choose a game above</h2><p>Every correct answer earns coins and XP.</p></div>
 </section>
 
 
 <section id="avatar" class="screen panel">
-<div class="panel-head"><button class="back" onclick="showScreen('home')">←</button><div class="ribbon">MY AVATAR</div><div class="stats"><span class="pill">🪙 <b class="coinsText">0</b></span></div></div>
+<div class="panel-head"><button class="back" onclick="showScreen('home')">←</button><div class="ribbon">DREAM JOBS</div><div class="stats"><span class="pill">🪙 <b class="coinsText">0</b></span><span class="pill">💎 <b id="avatarDiamonds">0</b></span></div></div>
 <div class="avatar-stage">
-  <div class="avatar-figure"><span id="avatarFace">👧</span><span id="avatarOutfit" class="avatar-outfit">🎒</span></div>
-  <h2 id="avatarLabel">School Outfit</h2>
-  <p>Unlock an outfit, then press <b>Wear</b>. Your choice is saved.</p>
+<div class="job-avatar"><span id="avatarFace">🧒</span><span id="avatarOutfit" class="job-badge">🎒</span></div>
+<h2 id="avatarLabel">School Learner</h2>
+<p>Unlock a dream job and press <b>Wear</b>. The avatar choice saves automatically.</p>
 </div>
-<h2 style="color:white;text-align:center">Choose an outfit</h2>
+<h2 style="color:white;text-align:center">Choose a Dream Job</h2>
 <div id="avatarShopGrid" class="shop-grid"></div>
+</section>
+
+
+<section id="room" class="screen panel">
+<div class="panel-head"><button class="back" onclick="showScreen('home')">←</button><div class="ribbon">MY ROOM</div><div class="stats"><span class="pill">🪙 <b class="coinsText">0</b></span><span class="pill">💎 <b id="roomDiamonds">0</b></span></div></div>
+<div class="room-stage">
+<div id="roomWallpaper" class="room-wallpaper"></div><div class="room-floor"></div>
+<div id="roomAvatar" class="room-avatar">🧒</div>
+<div id="placedItems"></div>
+</div>
+<div class="stage"><h2>What is My Room?</h2><p>This is the child’s personal reward space. They use coins earned from learning to decorate it with furniture, toys and pets. Diamonds unlock rare decorations.</p></div>
+<div id="roomShop" class="room-shop"></div>
 </section>
 
 <section id="shop" class="screen panel">
@@ -220,15 +281,15 @@ body.home-visible .bottom{display:none}
 
 <script>
 'use strict';
-const DEFAULT={name:'Qaisara',stars:120,coins:350,diamonds:25,xp:120,answered:0,owned:['School'],equipped:'School',lastReward:'',voice:true,sound:true,streak:3};
+const DEFAULT={name:'Qaisara',stars:120,coins:350,diamonds:25,xp:120,answered:0,owned:['School'],equipped:'School',lastReward:'',voice:true,sound:true,streak:3,learnDone:[],roomOwned:[],roomPlaced:[]};
 let state;try{state=JSON.parse(localStorage.getItem('raraFinalPWA'))||DEFAULT}catch(e){state={...DEFAULT}}state={...DEFAULT,...state};
-let lessonMode='count',correctAnswer=0,currentQuestion='',card=1;
+let lessonMode='count',correctAnswer=0,currentQuestion='',card=1,lessonCorrect=0,autoTimer=null;
 const $=id=>document.getElementById(id),rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,shuffle=a=>[...a].sort(()=>Math.random()-.5);
 function save(){try{localStorage.setItem('raraFinalPWA',JSON.stringify(state))}catch(e){}renderStats()}
 function renderStats(){
  document.querySelectorAll('.starsText').forEach(x=>x.textContent=state.stars);
  document.querySelectorAll('.coinsText').forEach(x=>x.textContent=state.coins);
- $('homeStars').textContent=state.stars;$('homeCoins').textContent=state.coins;$('homeDiamonds').textContent=state.diamonds;
+ $('homeStars').textContent=state.stars;$('homeCoins').textContent=state.coins;$('homeDiamonds').textContent=state.diamonds;$('avatarDiamonds')&&($('avatarDiamonds').textContent=state.diamonds);$('roomDiamonds')&&($('roomDiamonds').textContent=state.diamonds);
  $('liveName').textContent=state.name;$('settingsName').textContent=state.name;
  $('parentName').textContent=state.name;$('parentLevel').textContent=Math.floor(state.xp/100)+1;
  $('parentStars').textContent=state.stars;$('parentCoins').textContent=state.coins;$('parentAnswered').textContent=state.answered;
@@ -241,7 +302,7 @@ function showScreen(id){
  document.body.classList.toggle('home-visible',id==='home');
  window.scrollTo(0,0);
  if(id==='shop')renderShop();
- if(id==='avatar')renderAvatarShop();
+ if(id==='avatar')renderAvatarShop();if(id==='learn')renderStageMap();if(id==='room')renderRoom();
  if(id==='parent')renderStats();
 }
 function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1700)}
@@ -281,18 +342,68 @@ function closeSettings(){$('settingsModal').classList.remove('show')}
 function showWallet(type){
  const map={stars:['⭐','Stars','Earn stars by answering lessons and winning games. Stars show achievement.'],
  coins:['🪙','Coins','Use coins to unlock outfits for your avatar.'],
- diamonds:['💎','Diamonds','Premium rewards. Earn diamonds from achievements and streaks.']};
+ diamonds:['💎','Diamonds','Diamonds are rare rewards. Earn them by completing 10 learning stages, treasure boxes and achievements. Use them for rare Dream Jobs, pets and premium My Room decorations.']};
  const d=map[type];$('walletIcon').textContent=d[0];$('walletTitle').textContent=d[1];$('walletText').textContent=d[2];$('walletModal').classList.add('show');
 }
 function closeWallet(){$('walletModal').classList.remove('show')}
 function openName(){$('nameInput').value=state.name;$('nameModal').classList.add('show');setTimeout(()=>$('nameInput').focus(),100)}function closeName(){$('nameModal').classList.remove('show')}function saveName(){const v=$('nameInput').value.trim();if(!v){toast('Please enter your name');return}state.name=v.slice(0,18);save();closeName();toast('Hello, '+state.name+'!');speak('Hello '+state.name)}
 $('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')saveName()});
 function showInfo(title,text){$('infoTitle').textContent=title;$('infoText').textContent=text;$('infoModal').classList.add('show')}function closeInfo(){$('infoModal').classList.remove('show')}
+
+const WORLDS={
+ numbers:{title:'🌳 Number Forest',desc:'Counting, number recognition, more and less.',modes:['count','number','moreless','beforeafter','missing']},
+ addition:{title:'🏝 Addition Island',desc:'Easy addition using numbers and pictures.',modes:['add','add','pictureadd','add','add']},
+ subtraction:{title:'🏰 Subtraction Castle',desc:'Take away with child-friendly questions.',modes:['sub','sub','picturesub','sub','sub']},
+ shapes:{title:'🌈 Shape & Colour Land',desc:'Shapes, colours and visual matching.',modes:['shapelearn','colorlearn','shapelearn','colorlearn','shapelearn']},
+ patterns:{title:'🚀 Pattern Space',desc:'Patterns, sequences and simple logic.',modes:['pattern','missing','beforeafter','pattern','number']}
+};
+let currentWorld='numbers',currentStage=1;
+function selectWorld(world,btn){
+ currentWorld=world;document.querySelectorAll('#learnTabs button').forEach(x=>x.classList.remove('active'));btn?.classList.add('active');renderStageMap();
+}
+function renderStageMap(){
+ const w=WORLDS[currentWorld];if(!w)return;
+ $('worldTitle').textContent=w.title;$('worldDesc').textContent=w.desc;$('stageMap').innerHTML='';
+ for(let i=1;i<=10;i++){
+  const key=currentWorld+'-'+i,b=document.createElement('button');b.className='stage-node'+(state.learnDone.includes(key)?' done':'');
+  b.innerHTML='<b>'+i+'</b><br><small>'+(state.learnDone.includes(key)?'⭐ Done':'Play')+'</small>';
+  b.onclick=()=>startStage(i);$('stageMap').appendChild(b);
+ }
+}
+function startStage(stage){
+ currentStage=stage;const modes=WORLDS[currentWorld].modes;lessonMode=modes[(stage-1)%modes.length];showScreen('activity');newQuestion();
+}
+function completeLearningStage(){
+ const key=currentWorld+'-'+currentStage;
+ if(!state.learnDone.includes(key)){state.learnDone.push(key);state.stars+=2;state.coins+=10;if(state.learnDone.length%10===0)state.diamonds+=2;save();toast('Stage complete! ⭐ +2 🪙 +10')}
+}
+
 function startLesson(mode){lessonMode=mode;showScreen('activity');newQuestion()}
-function newQuestion(){let q='',visual='';if(lessonMode==='count'){correctAnswer=rand(1,10);q='How many apples?';visual='🍎'.repeat(correctAnswer);$('lessonTitle').textContent='COUNTING'}if(lessonMode==='add'){const a=rand(1,8),b=rand(1,8);correctAnswer=a+b;q=`${a} + ${b} = ?`;$('lessonTitle').textContent='ADDITION'}if(lessonMode==='sub'){const a=rand(3,12),b=rand(1,a);correctAnswer=a-b;q=`${a} − ${b} = ?`;$('lessonTitle').textContent='SUBTRACTION'}if(lessonMode==='number'){correctAnswer=rand(1,10);q='Tap number '+correctAnswer;$('lessonTitle').textContent='FIND NUMBER'}currentQuestion=q;$('question').textContent=q;$('visual').textContent=visual;const values=[correctAnswer];while(values.length<3){const n=Math.max(0,correctAnswer+rand(-3,3));if(!values.includes(n))values.push(n)}$('answers').innerHTML='';shuffle(values).forEach(n=>{const b=document.createElement('button');b.className='answer';b.textContent=n;b.onclick=()=>checkAnswer(b,n);$('answers').appendChild(b)});speak(q)}
-function checkAnswer(btn,value){if(value===correctAnswer){document.querySelectorAll('#answers .answer').forEach(x=>x.disabled=true);btn.classList.add('correct');state.stars++;state.coins+=5;state.xp+=10;state.answered++;save();beep(880,.12);setTimeout(()=>beep(1040,.13),100);speak('Good job '+state.name);if(state.answered%10===0){state.diamonds++;save();toast('Great job! ⭐ +1 🪙 +5 💎 +1')}else toast('Great job! ⭐ +1 🪙 +5');setTimeout(newQuestion,900)}else{btn.classList.add('wrong');beep(230,.18,'square');speak('Try again');toast('Try again');setTimeout(()=>btn.classList.remove('wrong'),500)}}function speakQuestion(){speak(currentQuestion)}
-const words=['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen','Twenty'];
-function renderCard(){$('cardNumber').textContent=card;$('cardWord').textContent=words[card];$('cardObjects').textContent='⭐'.repeat(Math.min(card,10))}function nextCard(){card=card===20?1:card+1;renderCard();speakCard()}function prevCard(){card=card===1?20:card-1;renderCard();speakCard()}function speakCard(){speak(words[card])}
+function newQuestion(){let q='',visual='';if(lessonMode==='count'){correctAnswer=rand(1,10);q='How many apples?';visual='🍎'.repeat(correctAnswer);$('lessonTitle').textContent='COUNTING'}if(lessonMode==='add'){const a=rand(1,8),b=rand(1,8);correctAnswer=a+b;q=`${a} + ${b} = ?`;$('lessonTitle').textContent='ADDITION'}if(lessonMode==='sub'){const a=rand(3,12),b=rand(1,a);correctAnswer=a-b;q=`${a} − ${b} = ?`;$('lessonTitle').textContent='SUBTRACTION'}if(lessonMode==='number'){correctAnswer=rand(1,10);q='Tap number '+correctAnswer;$('lessonTitle').textContent='FIND NUMBER'}
+if(lessonMode==='moreless'){const a=rand(1,10),b=rand(1,10);correctAnswer=a>b?a:b;q='Tap the bigger number';$('lessonTitle').textContent='MORE OR LESS';window.specialValues=[a,b]}
+if(lessonMode==='beforeafter'){const n=rand(2,9);correctAnswer=n+1;q='What comes after '+n+'?';$('lessonTitle').textContent='BEFORE & AFTER'}
+if(lessonMode==='missing'){const n=rand(1,8);correctAnswer=n+1;q=n+' , ? , '+(n+2);$('lessonTitle').textContent='MISSING NUMBER'}
+if(lessonMode==='pictureadd'){const a=rand(1,5),b=rand(1,5);correctAnswer=a+b;q='How many altogether?';visual='🍎'.repeat(a)+'  +  '+'🍎'.repeat(b);$('lessonTitle').textContent='PICTURE ADDITION'}
+if(lessonMode==='picturesub'){const a=rand(3,8),b=rand(1,a-1);correctAnswer=a-b;q=a+' apples, take away '+b+'. How many left?';visual='🍎'.repeat(a);$('lessonTitle').textContent='PICTURE SUBTRACTION'}
+if(lessonMode==='shapelearn'){const shapes=[['circle','🟢'],['triangle','🔺'],['square','🟦'],['star','⭐']];const s=shapes[rand(0,3)];correctAnswer=s[1];q='Tap the '+s[0];$('lessonTitle').textContent='SHAPES';window.specialValues=shuffle(shapes.map(x=>x[1])).slice(0,3);if(!window.specialValues.includes(correctAnswer))window.specialValues[0]=correctAnswer}
+if(lessonMode==='colorlearn'){const colors=[['red','🔴'],['blue','🔵'],['green','🟢'],['yellow','🟡']];const c=colors[rand(0,3)];correctAnswer=c[1];q='Tap '+c[0];$('lessonTitle').textContent='COLOURS';window.specialValues=shuffle(colors.map(x=>x[1])).slice(0,3);if(!window.specialValues.includes(correctAnswer))window.specialValues[0]=correctAnswer}
+if(lessonMode==='pattern'){const patterns=[['🔴','🔵','🔴','🔵','🔴','?','🔵'],['⭐','🌙','⭐','🌙','⭐','?','🌙']];const p=patterns[rand(0,1)];correctAnswer=p[5]==='?'?p[1]:p[1];q='Complete the pattern';visual=p.slice(0,5).join(' ' )+' ?';$('lessonTitle').textContent='PATTERNS';window.specialValues=p[0]==='🔴'?['🔴','🔵','🟢']:['⭐','🌙','☀️'];correctAnswer=p[1]}
+
+currentQuestion=q;$('question').textContent=q;$('visual').textContent=visual;let values=window.specialValues?[...window.specialValues]:[correctAnswer];window.specialValues=null;while(values.length<3){const n=Math.max(0,Number(correctAnswer)+rand(-3,3));if(!values.includes(n))values.push(n)}$('answers').innerHTML='';shuffle(values).forEach(n=>{const b=document.createElement('button');b.className='answer';b.textContent=n;b.onclick=()=>checkAnswer(b,n);$('answers').appendChild(b)});speak(q)}
+function checkAnswer(btn,value){if(value===correctAnswer){document.querySelectorAll('#answers .answer').forEach(x=>x.disabled=true);btn.classList.add('correct');state.stars++;state.coins+=5;state.xp+=10;state.answered++;lessonCorrect++;if(lessonCorrect>=5){lessonCorrect=0;completeLearningStage()}save();beep(880,.12);setTimeout(()=>beep(1040,.13),100);speak('Good job '+state.name);if(state.answered%10===0){state.diamonds++;save();toast('Great job! ⭐ +1 🪙 +5 💎 +1')}else toast('Great job! ⭐ +1 🪙 +5');setTimeout(newQuestion,900)}else{btn.classList.add('wrong');beep(230,.18,'square');speak('Try again');toast('Try again');setTimeout(()=>btn.classList.remove('wrong'),500)}}function speakQuestion(){speak(currentQuestion)}
+function numberToWords(n){
+ const one=['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'];
+ const tens=['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
+ if(n<20)return one[n];if(n===100)return 'One Hundred';return tens[Math.floor(n/10)]+(n%10?' '+one[n%10]:'');
+}
+function renderCard(){
+ $('cardNumber').textContent=card;$('cardWord').textContent=numberToWords(card);$('cardObjects').textContent=card<=10?'⭐'.repeat(card):'🔢 '+card;
+ $('cardIndex').textContent=card;$('flashProgress').style.width=card+'%';
+}function nextCard(){card=card===100?1:card+1;renderCard();speakCard()}function prevCard(){card=card===1?100:card-1;renderCard();speakCard()}function speakCard(){speak(numberToWords(card))}
+function toggleAutoPlay(){
+ if(autoTimer){clearInterval(autoTimer);autoTimer=null;$('autoText').textContent='Auto Play';return}
+ $('autoText').textContent='Stop';speakCard();autoTimer=setInterval(()=>{nextCard()},2400);
+}
 function openGame(type){showScreen('games');setTimeout(()=>({memory:startMemory,balloon:startBalloon,shape:startShape}[type]||startQuickMath)(),50)}
 let memorySet=0;
 const memorySets=[
@@ -324,10 +435,30 @@ function startMemory(next=false){
 function startBalloon(){const target=rand(1,9),nums=[target];while(nums.length<3){const n=rand(1,9);if(!nums.includes(n))nums.push(n)}$('gameArea').innerHTML='<div class="game-toolbar"><b>🎈 Pop number '+target+'</b><div><button class="reset" onclick="startBalloon()">↻ Restart</button> <button class="next-btn" onclick="startBalloon()">Next ➜</button></div></div><div id="balloonBoard" class="balloon-grid"></div>';shuffle(nums).forEach(n=>{const b=document.createElement('button');b.className='balloon';b.textContent=n;b.onclick=()=>{if(n===target){b.style.visibility='hidden';state.coins+=5;state.stars++;state.xp+=5;save();beep(880,.1);speak('Good job');toast('Pop! Correct! 🪙 +5');setTimeout(startBalloon,750)}else{beep(230,.15,'square');speak('Try again');toast('Try another balloon')}};$('balloonBoard').appendChild(b)});speak('Pop number '+target)}
 function startShape(){const rounds=[['circle','🟢',['🔺','🟢','🟦']],['triangle','🔺',['🟣','🔺','🟨']],['square','🟦',['🟦','🔴','🔺']]],r=rounds[rand(0,2)];$('gameArea').innerHTML='<div class="game-toolbar"><b>🔷 Tap the '+r[0]+'</b><div><button class="reset" onclick="startShape()">↻ Restart</button> <button class="next-btn" onclick="startShape()">Next ➜</button></div></div><div id="shapeBoard" class="shape-grid"></div>';shuffle(r[2]).forEach(x=>{const b=document.createElement('button');b.className='shape';b.textContent=x;b.onclick=()=>{if(x===r[1]){state.coins+=5;state.stars++;state.xp+=5;save();beep(880,.1);speak('Good job');toast('Correct shape! 🪙 +5');setTimeout(startShape,750)}else{beep(230,.15,'square');speak('Try again');toast('Try again')}};$('shapeBoard').appendChild(b)});speak('Tap the '+r[0])}
 function startQuickMath(){const a=rand(1,8),b=rand(1,8),answer=a+b,vals=[answer];while(vals.length<3){const n=Math.max(0,answer+rand(-3,3));if(!vals.includes(n))vals.push(n)}$('gameArea').innerHTML='<div class="game-toolbar"><b>⚡ '+a+' + '+b+' = ?</b><div><button class="reset" onclick="startQuickMath()">↻ Restart</button> <button class="next-btn" onclick="startQuickMath()">Next ➜</button></div></div><div id="quickAnswers" class="answers"></div>';shuffle(vals).forEach(n=>{const x=document.createElement('button');x.className='answer';x.textContent=n;x.onclick=()=>{if(n===answer){x.classList.add('correct');state.coins+=5;state.stars++;state.xp+=5;save();toast('Fast and correct!');setTimeout(startQuickMath,700)}else{x.classList.add('wrong');setTimeout(()=>x.classList.remove('wrong'),450)}};$('quickAnswers').appendChild(x)})}
+
+function gameReward(msg='Good job!'){
+ state.coins+=5;state.stars++;state.xp+=5;save();beep(880,.1);speak(msg);toast(msg+' 🪙 +5');
+}
+function choiceGame(title,prompt,choices,answer,nextFn){
+ $('gameArea').innerHTML='<div class="game-toolbar"><b>'+title+'</b><button class="next-btn" onclick="'+nextFn+'()">Next ➜</button></div><h2>'+prompt+'</h2><div id="genericChoices" class="answers"></div>';
+ choices.forEach(v=>{const b=document.createElement('button');b.className='answer';b.textContent=v;b.onclick=()=>{if(String(v)===String(answer)){b.classList.add('correct');gameReward();setTimeout(()=>window[nextFn](),700)}else{b.classList.add('wrong');speak('Try again');setTimeout(()=>b.classList.remove('wrong'),450)}};$('genericChoices').appendChild(b)});
+}
+function startMissingNumber(){const n=rand(1,8),a=n+1;choiceGame('❓ Missing Number',n+' , ? , '+(n+2),shuffle([a,Math.max(0,a-1),a+2]),a,'startMissingNumber')}
+function startMoreLess(){const a=rand(1,10),b=rand(1,10),ans=a>b?a:b;choiceGame('⚖️ More or Less','Tap the bigger number',[a,b],ans,'startMoreLess')}
+function startDiceCount(){const n=rand(1,6);choiceGame('🎲 Dice Count','How many dots? '+['','⚀','⚁','⚂','⚃','⚄','⚅'][n],shuffle([n,Math.max(1,n-1),Math.min(6,n+1)]),n,'startDiceCount')}
+function startColorMatch(){const colors=[['Red','🔴'],['Blue','🔵'],['Green','🟢'],['Yellow','🟡']],c=colors[rand(0,3)];choiceGame('🎨 Colour Match','Tap '+c[0],shuffle(colors.map(x=>x[1])).slice(0,3).concat(c[1]).filter((v,i,a)=>a.indexOf(v)===i).slice(0,3),c[1],'startColorMatch')}
+function startAnimalCount(){const n=rand(1,8),animal=['🐣','🐰','🐼'][rand(0,2)];choiceGame('🐣 Animal Count','How many? '+animal.repeat(n),shuffle([n,Math.max(1,n-1),n+1]),n,'startAnimalCount')}
+function startTreasureBox(){
+ const boxes=['🎁','🎁','🎁'],win=rand(0,2);$('gameArea').innerHTML='<div class="game-toolbar"><b>🎁 Treasure Box</b><button class="next-btn" onclick="startTreasureBox()">Next ➜</button></div><h2>Choose a mystery box!</h2><div id="boxChoices" class="answers"></div>';
+ boxes.forEach((x,i)=>{const b=document.createElement('button');b.className='answer';b.textContent=x;b.onclick=()=>{if(i===win){b.textContent='💎';state.diamonds++;state.coins+=10;save();speak('Amazing treasure');toast('Treasure! 💎 +1 🪙 +10')}else{b.textContent='⭐';state.stars++;save();toast('You found a star!')}};$('boxChoices').appendChild(b)});
+}
+
 function claimReward(){const today=new Date().toISOString().slice(0,10);if(state.lastReward===today){toast('Reward already claimed today 💜');return}state.lastReward=today;state.coins+=20;save();toast('Daily reward +20 coins!')}
 const OUTFITS=[
- ['School','🎒',0],['Princess','👗',60],['Doctor','🥼',80],['Chef','👩‍🍳',90],
- ['Astronaut','🚀',120],['Fairy','🧚',140],['Pilot','🧑‍✈️',160],['Graduate','🎓',180]
+ ['School','🎒',0,'coin'],['Doctor','🩺',80,'coin'],['Chef','🍳',90,'coin'],['Teacher','📚',100,'coin'],
+ ['Firefighter','🚒',120,'coin'],['Police','🚓',130,'coin'],['Pilot','✈️',150,'coin'],['Scientist','🔬',160,'coin'],
+ ['Artist','🎨',170,'coin'],['Engineer','🛠️',180,'coin'],['Astronaut','🚀',8,'diamond'],['Princess','👑',10,'diamond'],
+ ['Fairy','🧚',12,'diamond'],['Unicorn Rider','🦄',15,'diamond']
 ];
 function updateAvatar(){
  const found=OUTFITS.find(x=>x[0]===state.equipped)||OUTFITS[0];
@@ -337,25 +468,51 @@ function updateAvatar(){
 }
 function renderAvatarShop(){
  $('avatarShopGrid').innerHTML='';
- OUTFITS.forEach(([name,ico,cost])=>{
+ OUTFITS.forEach(([name,ico,cost,currency])=>{
   const owned=state.owned.includes(name),equipped=state.equipped===name,d=document.createElement('div');
   d.className='shop-item'+(equipped?' outfit-selected':'');
-  d.innerHTML='<div class="ico">'+ico+'</div><h3>'+name+'</h3><p>'+(owned?(equipped?'WEARING':'OWNED'):'🪙 '+cost)+'</p><button>'+(owned?(equipped?'Wearing':'Wear'):'Unlock')+'</button>';
+  d.innerHTML='<div class="ico">'+ico+'</div><h3>'+name+'</h3><p>'+(owned?(equipped?'WEARING':'OWNED'):(currency==='diamond'?'💎 ':'🪙 ')+cost)+'</p><button>'+(owned?(equipped?'Wearing':'Wear'):'Unlock')+'</button>';
   d.querySelector('button').onclick=()=>{
    if(owned){state.equipped=name;save();renderAvatarShop();toast(name+' outfit equipped!')}
-   else if(state.coins>=cost){state.coins-=cost;state.owned.push(name);state.equipped=name;save();renderAvatarShop();toast(name+' unlocked and equipped!')}
-   else toast('You need '+(cost-state.coins)+' more coins');
+   else if(currency==='coin'&&state.coins>=cost){state.coins-=cost;state.owned.push(name);state.equipped=name;save();renderAvatarShop();toast(name+' unlocked and equipped!')}
+   else if(currency==='diamond'&&state.diamonds>=cost){state.diamonds-=cost;state.owned.push(name);state.equipped=name;save();renderAvatarShop();toast(name+' rare job unlocked!')}
+   else toast('Not enough '+(currency==='diamond'?'diamonds':'coins'));
   };
   $('avatarShopGrid').appendChild(d);
  });
  updateAvatar();
 }
 function renderShop(){renderAvatarShop()}
+
+const ROOM_ITEMS=[
+ ['Bed','🛏️',50,'coin',8,55],['Teddy','🧸',30,'coin',72,56],['Books','📚',40,'coin',12,22],
+ ['Plant','🪴',35,'coin',78,22],['Lamp','💡',45,'coin',50,10],['Cat','🐱',5,'diamond',25,65],
+ ['Aquarium','🐠',7,'diamond',66,30],['Rainbow Wallpaper','🌈',10,'diamond',0,0]
+];
+function renderRoom(){
+ $('roomShop').innerHTML='';$('placedItems').innerHTML='';$('roomAvatar').textContent=(OUTFITS.find(x=>x[0]===state.equipped)||OUTFITS[0])[1];
+ state.roomPlaced.forEach(name=>{
+  const item=ROOM_ITEMS.find(x=>x[0]===name);if(!item||name==='Rainbow Wallpaper')return;
+  const d=document.createElement('div');d.className='room-item';d.textContent=item[1];d.style.left=item[4]+'%';d.style.top=item[5]+'%';$('placedItems').appendChild(d);
+ });
+ $('roomWallpaper').style.background=state.roomPlaced.includes('Rainbow Wallpaper')?'linear-gradient(135deg,#fecdd3,#fde68a,#bbf7d0,#bfdbfe,#ddd6fe)':'linear-gradient(#bfdbfe,#e9d5ff)';
+ ROOM_ITEMS.forEach(([name,ico,cost,currency])=>{
+  const owned=state.roomOwned.includes(name),placed=state.roomPlaced.includes(name),d=document.createElement('div');
+  d.className='room-product'+(currency==='diamond'?' diamond-item':'');d.innerHTML='<div class="ico">'+ico+'</div><b>'+name+'</b><p>'+(owned?(placed?'PLACED':'OWNED'):(currency==='diamond'?'💎 ':'🪙 ')+cost)+'</p><button class="pill">'+(owned?(placed?'Remove':'Place'):'Buy')+'</button>';
+  d.querySelector('button').onclick=()=>{
+   if(owned){if(placed)state.roomPlaced=state.roomPlaced.filter(x=>x!==name);else state.roomPlaced.push(name);save();renderRoom();return}
+   if(currency==='coin'&&state.coins>=cost){state.coins-=cost;state.roomOwned.push(name);state.roomPlaced.push(name);save();renderRoom();toast(name+' added to your room!')}
+   else if(currency==='diamond'&&state.diamonds>=cost){state.diamonds-=cost;state.roomOwned.push(name);state.roomPlaced.push(name);save();renderRoom();toast('Rare room item unlocked!')}
+   else toast('Not enough '+(currency==='diamond'?'diamonds':'coins'));
+  };$('roomShop').appendChild(d);
+ });
+}
+
 function resetProgress(){if(confirm('Reset all progress?')){state={...DEFAULT,name:state.name};save();toast('Progress reset')}}
 renderStats();renderCard();showScreen('home');
 const isiOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 if(isiOS){$('voiceBanner')?.classList.add('show');$('gameVoiceBanner')?.classList.add('show')}
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=2').catch(()=>{}));}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=3').catch(()=>{}));}
 </script>
 </body>
 </html>
