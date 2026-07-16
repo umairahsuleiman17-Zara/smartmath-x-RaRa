@@ -115,6 +115,9 @@ body.home-visible .bottom{display:none}
 .flash-progress{width:100%;height:15px;background:#ddd6fe;border-radius:99px;overflow:hidden;margin:13px 0}.flash-progress i{display:block;height:100%;background:linear-gradient(90deg,#65c83c,#fbbf24);width:1%}
 @media(max-width:430px){.stage-map{grid-template-columns:repeat(4,1fr)}.stage-node{min-height:65px}.room-avatar{left:37%}.game-grid-more{grid-template-columns:repeat(2,1fr)}}
 
+
+.profile-switcher{position:fixed;inset:0;z-index:300;background:linear-gradient(180deg,#5b21b6,#2e1065);display:none;align-items:center;justify-content:center;padding:18px}.profile-switcher.show{display:flex}.profile-box{width:min(720px,96vw);max-height:92vh;overflow:auto;background:linear-gradient(#fff,#f3e8ff);border-radius:30px;padding:24px;box-shadow:0 20px 60px #16032d}.profile-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.profile-card{background:linear-gradient(#fff,#eadcff);border-radius:24px;padding:17px;text-align:center;box-shadow:0 7px 0 #b69aca}.profile-card .face{font-size:72px}.profile-card.active{outline:5px solid #fbbf24}.profile-add{border:4px dashed #a78bfa;background:#ffffff99}.profile-actions{display:flex;gap:8px;justify-content:center;margin-top:10px}.profile-actions button{padding:8px 11px;border-radius:12px;font-weight:900}.profile-use{background:#65c83c;color:#fff}.profile-edit{background:#7c3aed;color:#fff}.profile-delete{background:#fb7185;color:#fff}.profile-form{display:none;margin-top:18px;background:#fff;padding:18px;border-radius:22px}.profile-form.show{display:block}.profile-form input,.profile-form select{width:100%;padding:13px;margin:7px 0;border:3px solid #ddd6fe;border-radius:14px;font-size:18px}.age-choice{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.age-btn{padding:14px;border-radius:16px;background:#ede9fe;color:#6d28d9;font-weight:1000}.age-btn.selected{background:#7c3aed;color:#fff}.question-progress{margin-bottom:15px}.question-meta{display:flex;justify-content:space-between;font-weight:1000}.question-bar{height:16px;border-radius:99px;background:#ddd6fe;overflow:hidden;margin-top:7px}.question-bar i{display:block;height:100%;width:10%;background:linear-gradient(90deg,#65c83c,#fbbf24);transition:.25s}.stage-stars{font-size:24px;letter-spacing:3px;margin-top:8px}.stage-summary{display:none;background:linear-gradient(#fff7ed,#fef3c7);border-radius:24px;padding:24px;text-align:center;box-shadow:0 8px 0 #d8b76c}.stage-summary.show{display:block}.stage-summary .big{font-size:70px}.age-badge{display:inline-flex;align-items:center;gap:6px;background:#fff;color:#6d28d9;padding:8px 12px;border-radius:999px;font-weight:1000}.profile-home-btn{position:absolute;z-index:25;left:1.4%;top:1.1%;width:37%;height:6%;border-radius:999px;background:transparent}.parent-profile-list{display:grid;gap:12px;margin-top:15px}.parent-child{background:#fff;padding:15px;border-radius:18px;text-align:left}@media(max-width:430px){.profile-grid{grid-template-columns:1fr}.profile-box{padding:16px}}
+
 </style>
 </head>
 <body>
@@ -122,7 +125,7 @@ body.home-visible .bottom{display:none}
 <section id="home" class="screen active">
 <div class="home-shell" aria-label="SMART MATH x RARA home screen">
 <div class="avatar-badge" id="homeAvatarBadge">👧</div>
-<button class="live-name" onclick="openName()">Hi, <span id="liveName">Qaisara</span>! 💜<small>Let’s learn and have fun!</small></button>
+<button class="profile-home-btn" onclick="openProfileSwitcher()" aria-label="Switch child profile"></button><button class="live-name" onclick="openProfileSwitcher()">Hi, <span id="liveName">Qaisara</span>! 💜<small>Let’s learn and have fun!</small></button>
 <div class="live-top">
   <button class="live-stat" onclick="showWallet('stars')">⭐ <span id="homeStars">120</span></button>
   <button class="live-stat" onclick="showWallet('coins')">🪙 <span id="homeCoins">350</span></button>
@@ -157,7 +160,7 @@ body.home-visible .bottom{display:none}
 </section>
 
 <section id="learn" class="screen panel">
-<div class="panel-head"><button class="back" onclick="showScreen('home')">←</button><div class="ribbon">50 LEARNING STAGES</div><div class="stats"><span class="pill">⭐ <b class="starsText">0</b></span></div></div>
+<div class="panel-head"><button class="back" onclick="showScreen('home')">←</button><div class="ribbon">50 LEARNING STAGES</div><div class="stats"><span class="age-badge">Age <b id="learnAge">4</b></span><span class="pill">⭐ <b class="starsText">0</b></span></div></div>
 <div class="category-tabs" id="learnTabs">
 <button class="active" onclick="selectWorld('numbers',this)">🌳 Numbers</button>
 <button onclick="selectWorld('addition',this)">🏝 Addition</button>
@@ -174,7 +177,7 @@ body.home-visible .bottom{display:none}
 
 <section id="activity" class="screen panel">
 <div class="panel-head"><button class="back" onclick="showScreen('learn')">←</button><div id="lessonTitle" class="ribbon">COUNTING</div><span></span></div>
-<div id="voiceBanner" class="voice-banner">🔊 Tap “Enable Voice” once on iPhone/iPad.<br><button class="pill" onclick="enableVoice()">Enable Voice</button></div><div class="activity"><h2 id="question"></h2><div id="visual" class="visual"></div><div id="answers" class="answers"></div><div class="controls"><button class="pill" onclick="speakQuestion()">🔊 Hear Again</button><button class="pill" onclick="newQuestion()">Next ➜</button></div></div>
+<div class="question-progress"><div class="question-meta"><span id="questionCounter">Question 1 / 10</span><span id="stageLabel">Stage 1</span></div><div class="question-bar"><i id="questionBar"></i></div><div id="questionStars" class="stage-stars">☆☆☆☆☆☆☆☆☆☆</div></div><div id="stageSummary" class="stage-summary"><div class="big">🎉</div><h2>Stage Complete!</h2><div id="summaryStars" style="font-size:42px">⭐⭐⭐</div><p id="summaryReward">+20 Coins · +10 XP</p><button class="pill" onclick="continueAfterStage()">Continue</button></div><div id="voiceBanner" class="voice-banner">🔊 Tap “Enable Voice” once on iPhone/iPad.<br><button class="pill" onclick="enableVoice()">Enable Voice</button></div><div class="activity"><h2 id="question"></h2><div id="visual" class="visual"></div><div id="answers" class="answers"></div><div class="controls"><button class="pill" onclick="speakQuestion()">🔊 Hear Again</button><button class="pill" onclick="newQuestion()">Next ➜</button></div></div>
 </section>
 
 <section id="flash" class="screen panel">
@@ -243,7 +246,7 @@ body.home-visible .bottom{display:none}
 
 <section id="parent" class="screen panel">
 <div class="panel-head"><button class="back" onclick="showScreen('home')">←</button><div class="ribbon">PARENT</div><span></span></div>
-<div class="dashboard"><h2>Learning Progress</h2><p>Name: <b id="parentName"></b></p><p>Level: <b id="parentLevel"></b></p><p>Stars: <b id="parentStars"></b></p><p>Coins: <b id="parentCoins"></b></p><p>Questions answered: <b id="parentAnswered"></b></p><button class="pill" onclick="resetProgress()">Reset Progress</button></div>
+<div class="dashboard"><h2>Learning Progress</h2><button class="pill" onclick="openProfileSwitcher()">👨‍👩‍👧 Switch Child</button><p>Name: <b id="parentName"></b></p><p>Level: <b id="parentLevel"></b></p><p>Stars: <b id="parentStars"></b></p><p>Coins: <b id="parentCoins"></b></p><p>Questions answered: <b id="parentAnswered"></b></p><button class="pill" onclick="resetProgress()">Reset Current Child</button><div id="parentProfileList" class="parent-profile-list"></div></div>
 </section>
 
 <section id="achievements" class="screen panel">
@@ -260,6 +263,7 @@ body.home-visible .bottom{display:none}
 <button onclick="showScreen('achievements')"><span>🏆</span>Awards</button>
 </nav>
 
+<div id="profileSwitcher" class="profile-switcher"><div class="profile-box"><h1 style="text-align:center;margin-top:0">Who is learning today?</h1><p style="text-align:center">Up to 4 child profiles, ages 4–6.</p><div id="profileGrid" class="profile-grid"></div><div id="profileForm" class="profile-form"><h2 id="profileFormTitle">Add Child</h2><input id="childNameInput" maxlength="18" placeholder="Child's name"><div class="age-choice"><button class="age-btn" data-age="4" onclick="chooseAge(4,this)">Age 4</button><button class="age-btn" data-age="5" onclick="chooseAge(5,this)">Age 5</button><button class="age-btn" data-age="6" onclick="chooseAge(6,this)">Age 6</button></div><select id="childAvatarInput"><option value="👧">Girl</option><option value="👦">Boy</option><option value="🧕">Girl with hijab</option><option value="🧒">Child</option></select><button class="save" onclick="saveChildProfile()">Save Profile</button><p><button onclick="cancelProfileForm()" style="background:transparent;color:#6d28d9">Cancel</button></p></div><p style="text-align:center"><button class="pill" onclick="closeProfileSwitcher()">Close</button></p></div></div>
 <div id="nameModal" class="modal"><div class="modal-card"><div style="font-size:52px">👋</div><h2>What is your name?</h2><input id="nameInput" maxlength="18" placeholder="Enter your name"><button class="save" onclick="saveName()">Save My Name 💜</button><p><button onclick="closeName()" style="background:transparent;color:#6d28d9">Cancel</button></p></div></div>
 <div id="infoModal" class="modal"><div class="modal-card"><h2 id="infoTitle"></h2><p id="infoText"></p><button class="save" onclick="closeInfo()">Close</button></div></div>
 
@@ -281,19 +285,19 @@ body.home-visible .bottom{display:none}
 
 <script>
 'use strict';
-const DEFAULT={name:'Qaisara',stars:120,coins:350,diamonds:25,xp:120,answered:0,owned:['School'],equipped:'School',lastReward:'',voice:true,sound:true,streak:3,learnDone:[],roomOwned:[],roomPlaced:[]};
+const CHILD_DEFAULT={name:'Qaisara',age:4,avatar:'🧕',stars:120,coins:350,diamonds:25,xp:120,answered:0,correct:0,wrong:0,owned:['School'],equipped:'School',lastReward:'',voice:true,sound:true,streak:3,learnDone:[],roomOwned:[],roomPlaced:[],flashcard:1};const FAMILY_DEFAULT={activeId:'child1',profiles:{child1:{...CHILD_DEFAULT,id:'child1'}}};
 let state;try{state=JSON.parse(localStorage.getItem('raraFinalPWA'))||DEFAULT}catch(e){state={...DEFAULT}}state={...DEFAULT,...state};
-let lessonMode='count',correctAnswer=0,currentQuestion='',card=1,lessonCorrect=0,autoTimer=null;
+let lessonMode='count',correctAnswer=0,currentQuestion='',card=state.flashcard||1,lessonCorrect=0,autoTimer=null,questionNo=1,stageCorrect=0,stageWrong=0,editingProfileId=null,selectedAge=4;
 const $=id=>document.getElementById(id),rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,shuffle=a=>[...a].sort(()=>Math.random()-.5);
-function save(){try{localStorage.setItem('raraFinalPWA',JSON.stringify(state))}catch(e){}renderStats()}
+function save(){family.profiles[state.id]=state;family.activeId=state.id;try{localStorage.setItem('raraFamilyGold',JSON.stringify(family))}catch(e){}renderStats()}
 function renderStats(){
  document.querySelectorAll('.starsText').forEach(x=>x.textContent=state.stars);
  document.querySelectorAll('.coinsText').forEach(x=>x.textContent=state.coins);
  $('homeStars').textContent=state.stars;$('homeCoins').textContent=state.coins;$('homeDiamonds').textContent=state.diamonds;$('avatarDiamonds')&&($('avatarDiamonds').textContent=state.diamonds);$('roomDiamonds')&&($('roomDiamonds').textContent=state.diamonds);
- $('liveName').textContent=state.name;$('settingsName').textContent=state.name;
- $('parentName').textContent=state.name;$('parentLevel').textContent=Math.floor(state.xp/100)+1;
+ $('liveName').textContent=state.name;$('settingsName').textContent=state.name;$('learnAge')&&($('learnAge').textContent=state.age);
+ $('parentName').textContent=state.name+' (Age '+state.age+')';$('parentLevel').textContent=Math.floor(state.xp/100)+1;
  $('parentStars').textContent=state.stars;$('parentCoins').textContent=state.coins;$('parentAnswered').textContent=state.answered;
- updateAvatar();
+ updateAvatar();renderParentProfiles();
  updateSettingsUI();
 }
 function showScreen(id){
@@ -346,6 +350,20 @@ function showWallet(type){
  const d=map[type];$('walletIcon').textContent=d[0];$('walletTitle').textContent=d[1];$('walletText').textContent=d[2];$('walletModal').classList.add('show');
 }
 function closeWallet(){$('walletModal').classList.remove('show')}
+
+function profileCount(){return Object.keys(family.profiles).length}
+function openProfileSwitcher(){renderProfiles();$('profileSwitcher').classList.add('show')}
+function closeProfileSwitcher(){$('profileSwitcher').classList.remove('show');cancelProfileForm()}
+function renderProfiles(){$('profileGrid').innerHTML='';Object.values(family.profiles).forEach(p=>{const d=document.createElement('div');d.className='profile-card'+(p.id===state.id?' active':'');d.innerHTML='<div class="face">'+p.avatar+'</div><h3>'+p.name+'</h3><small>Age '+p.age+' · ⭐ '+p.stars+' · 🪙 '+p.coins+'</small><div class="profile-actions"><button class="profile-use">Play</button><button class="profile-edit">Edit</button>'+(profileCount()>1?'<button class="profile-delete">Delete</button>':'')+'</div>';d.querySelector('.profile-use').onclick=()=>switchProfile(p.id);d.querySelector('.profile-edit').onclick=()=>openProfileForm(p.id);d.querySelector('.profile-delete')?.addEventListener('click',()=>deleteProfile(p.id));$('profileGrid').appendChild(d)});if(profileCount()<4){const a=document.createElement('button');a.className='profile-card profile-add';a.innerHTML='<div class="face">➕</div><h3>Add Child</h3><small>Maximum 4 profiles</small>';a.onclick=()=>openProfileForm(null);$('profileGrid').appendChild(a)}}
+function switchProfile(id){if(!family.profiles[id])return;save();state=family.profiles[id];family.activeId=id;card=state.flashcard||1;questionNo=1;stageCorrect=0;stageWrong=0;try{localStorage.setItem('raraFamilyGold',JSON.stringify(family))}catch(e){}renderStats();renderCard();renderStageMap();closeProfileSwitcher();showScreen('home');toast('Welcome '+state.name+'!')}
+function openProfileForm(id){editingProfileId=id;const p=id?family.profiles[id]:null;selectedAge=p?.age||4;$('profileFormTitle').textContent=id?'Edit Child':'Add Child';$('childNameInput').value=p?.name||'';$('childAvatarInput').value=p?.avatar||'👧';document.querySelectorAll('.age-btn').forEach(b=>b.classList.toggle('selected',Number(b.dataset.age)===selectedAge));$('profileForm').classList.add('show')}
+function cancelProfileForm(){$('profileForm').classList.remove('show');editingProfileId=null}
+function chooseAge(age,btn){selectedAge=age;document.querySelectorAll('.age-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected')}
+function saveChildProfile(){const name=$('childNameInput').value.trim();if(!name){toast('Please enter a name');return}if(!editingProfileId&&profileCount()>=4){toast('Maximum 4 child profiles');return}if(editingProfileId){const p=family.profiles[editingProfileId];p.name=name.slice(0,18);p.age=selectedAge;p.avatar=$('childAvatarInput').value}else{const id='child'+Date.now();family.profiles[id]={...JSON.parse(JSON.stringify(CHILD_DEFAULT)),id,name:name.slice(0,18),age:selectedAge,avatar:$('childAvatarInput').value,stars:0,coins:50,diamonds:2,xp:0}}try{localStorage.setItem('raraFamilyGold',JSON.stringify(family))}catch(e){}cancelProfileForm();renderProfiles();renderStats();toast('Profile saved')}
+function deleteProfile(id){if(profileCount()<=1)return;if(!confirm('Delete this child profile?'))return;delete family.profiles[id];if(state.id===id){const next=Object.values(family.profiles)[0];state=next;family.activeId=next.id}save();renderProfiles()}
+function renderParentProfiles(){if(!$('parentProfileList'))return;$('parentProfileList').innerHTML='<h3>Family Profiles</h3>';Object.values(family.profiles).forEach(p=>{const total=(p.correct||0)+(p.wrong||0),accuracy=total?Math.round((p.correct||0)/total*100):0,d=document.createElement('div');d.className='parent-child';d.innerHTML='<b>'+p.avatar+' '+p.name+' · Age '+p.age+'</b><br><small>Stages: '+(p.learnDone?.length||0)+'/50 · Accuracy: '+accuracy+'% · ⭐ '+p.stars+' · 🪙 '+p.coins+'</small>';$('parentProfileList').appendChild(d)})}
+function allowedWorld(world){if(state.age===4)return ['numbers','shapes'].includes(world);if(state.age===5)return ['numbers','addition','subtraction','shapes'].includes(world);return true}
+
 function openName(){$('nameInput').value=state.name;$('nameModal').classList.add('show');setTimeout(()=>$('nameInput').focus(),100)}function closeName(){$('nameModal').classList.remove('show')}function saveName(){const v=$('nameInput').value.trim();if(!v){toast('Please enter your name');return}state.name=v.slice(0,18);save();closeName();toast('Hello, '+state.name+'!');speak('Hello '+state.name)}
 $('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')saveName()});
 function showInfo(title,text){$('infoTitle').textContent=title;$('infoText').textContent=text;$('infoModal').classList.add('show')}function closeInfo(){$('infoModal').classList.remove('show')}
@@ -359,10 +377,11 @@ const WORLDS={
 };
 let currentWorld='numbers',currentStage=1;
 function selectWorld(world,btn){
+ if(!allowedWorld(world)){toast('This world is for an older level');return}
  currentWorld=world;document.querySelectorAll('#learnTabs button').forEach(x=>x.classList.remove('active'));btn?.classList.add('active');renderStageMap();
 }
 function renderStageMap(){
- const w=WORLDS[currentWorld];if(!w)return;
+ const w=WORLDS[currentWorld];if(!w)return;if(!allowedWorld(currentWorld)){currentWorld='numbers';return renderStageMap()}
  $('worldTitle').textContent=w.title;$('worldDesc').textContent=w.desc;$('stageMap').innerHTML='';
  for(let i=1;i<=10;i++){
   const key=currentWorld+'-'+i,b=document.createElement('button');b.className='stage-node'+(state.learnDone.includes(key)?' done':'');
@@ -371,15 +390,13 @@ function renderStageMap(){
  }
 }
 function startStage(stage){
- currentStage=stage;const modes=WORLDS[currentWorld].modes;lessonMode=modes[(stage-1)%modes.length];showScreen('activity');newQuestion();
+ currentStage=stage;questionNo=1;stageCorrect=0;stageWrong=0;lessonCorrect=0;$('stageSummary').classList.remove('show');document.querySelector('.activity').style.display='block';const modes=WORLDS[currentWorld].modes;lessonMode=modes[(stage-1)%modes.length];showScreen('activity');newQuestion();
 }
-function completeLearningStage(){
- const key=currentWorld+'-'+currentStage;
- if(!state.learnDone.includes(key)){state.learnDone.push(key);state.stars+=2;state.coins+=10;if(state.learnDone.length%10===0)state.diamonds+=2;save();toast('Stage complete! ⭐ +2 🪙 +10')}
+function completeLearningStage(){const key=currentWorld+'-'+currentStage;if(!state.learnDone.includes(key))state.learnDone.push(key);const rating=stageCorrect>=9?3:stageCorrect>=7?2:1;const coins=rating*10,xp=rating*5;state.coins+=coins;state.xp+=xp;if(state.learnDone.length%10===0)state.diamonds+=2;save();return {rating,coins,xp}}
 }
 
-function startLesson(mode){lessonMode=mode;showScreen('activity');newQuestion()}
-function newQuestion(){let q='',visual='';if(lessonMode==='count'){correctAnswer=rand(1,10);q='How many apples?';visual='🍎'.repeat(correctAnswer);$('lessonTitle').textContent='COUNTING'}if(lessonMode==='add'){const a=rand(1,8),b=rand(1,8);correctAnswer=a+b;q=`${a} + ${b} = ?`;$('lessonTitle').textContent='ADDITION'}if(lessonMode==='sub'){const a=rand(3,12),b=rand(1,a);correctAnswer=a-b;q=`${a} − ${b} = ?`;$('lessonTitle').textContent='SUBTRACTION'}if(lessonMode==='number'){correctAnswer=rand(1,10);q='Tap number '+correctAnswer;$('lessonTitle').textContent='FIND NUMBER'}
+function startLesson(mode){lessonMode=mode;currentStage=1;questionNo=1;stageCorrect=0;stageWrong=0;$('stageSummary').classList.remove('show');document.querySelector('.activity').style.display='block';showScreen('activity');newQuestion()}
+function newQuestion(){if(questionNo>10){finishStage();return}let q='',visual='';$('questionCounter').textContent='Question '+questionNo+' / 10';$('stageLabel').textContent='Stage '+currentStage;$('questionBar').style.width=(questionNo*10)+'%';$('questionStars').textContent='★'.repeat(stageCorrect)+'☆'.repeat(10-stageCorrect);if(lessonMode==='count'){correctAnswer=rand(1,10);q='How many apples?';visual='🍎'.repeat(correctAnswer);$('lessonTitle').textContent='COUNTING'}if(lessonMode==='add'){const a=rand(1,8),b=rand(1,8);correctAnswer=a+b;q=`${a} + ${b} = ?`;$('lessonTitle').textContent='ADDITION'}if(lessonMode==='sub'){const a=rand(3,12),b=rand(1,a);correctAnswer=a-b;q=`${a} − ${b} = ?`;$('lessonTitle').textContent='SUBTRACTION'}if(lessonMode==='number'){correctAnswer=rand(1,10);q='Tap number '+correctAnswer;$('lessonTitle').textContent='FIND NUMBER'}
 if(lessonMode==='moreless'){const a=rand(1,10),b=rand(1,10);correctAnswer=a>b?a:b;q='Tap the bigger number';$('lessonTitle').textContent='MORE OR LESS';window.specialValues=[a,b]}
 if(lessonMode==='beforeafter'){const n=rand(2,9);correctAnswer=n+1;q='What comes after '+n+'?';$('lessonTitle').textContent='BEFORE & AFTER'}
 if(lessonMode==='missing'){const n=rand(1,8);correctAnswer=n+1;q=n+' , ? , '+(n+2);$('lessonTitle').textContent='MISSING NUMBER'}
@@ -390,14 +407,18 @@ if(lessonMode==='colorlearn'){const colors=[['red','🔴'],['blue','🔵'],['gre
 if(lessonMode==='pattern'){const patterns=[['🔴','🔵','🔴','🔵','🔴','?','🔵'],['⭐','🌙','⭐','🌙','⭐','?','🌙']];const p=patterns[rand(0,1)];correctAnswer=p[5]==='?'?p[1]:p[1];q='Complete the pattern';visual=p.slice(0,5).join(' ' )+' ?';$('lessonTitle').textContent='PATTERNS';window.specialValues=p[0]==='🔴'?['🔴','🔵','🟢']:['⭐','🌙','☀️'];correctAnswer=p[1]}
 
 currentQuestion=q;$('question').textContent=q;$('visual').textContent=visual;let values=window.specialValues?[...window.specialValues]:[correctAnswer];window.specialValues=null;while(values.length<3){const n=Math.max(0,Number(correctAnswer)+rand(-3,3));if(!values.includes(n))values.push(n)}$('answers').innerHTML='';shuffle(values).forEach(n=>{const b=document.createElement('button');b.className='answer';b.textContent=n;b.onclick=()=>checkAnswer(b,n);$('answers').appendChild(b)});speak(q)}
-function checkAnswer(btn,value){if(value===correctAnswer){document.querySelectorAll('#answers .answer').forEach(x=>x.disabled=true);btn.classList.add('correct');state.stars++;state.coins+=5;state.xp+=10;state.answered++;lessonCorrect++;if(lessonCorrect>=5){lessonCorrect=0;completeLearningStage()}save();beep(880,.12);setTimeout(()=>beep(1040,.13),100);speak('Good job '+state.name);if(state.answered%10===0){state.diamonds++;save();toast('Great job! ⭐ +1 🪙 +5 💎 +1')}else toast('Great job! ⭐ +1 🪙 +5');setTimeout(newQuestion,900)}else{btn.classList.add('wrong');beep(230,.18,'square');speak('Try again');toast('Try again');setTimeout(()=>btn.classList.remove('wrong'),500)}}function speakQuestion(){speak(currentQuestion)}
+function checkAnswer(btn,value){if(value===correctAnswer){document.querySelectorAll('#answers .answer').forEach(x=>x.disabled=true);btn.classList.add('correct');state.stars++;state.coins+=5;state.xp+=10;state.answered++;state.correct=(state.correct||0)+1;stageCorrect++;questionNo++;save();beep(880,.12);setTimeout(()=>beep(1040,.13),100);speak('Good job '+state.name);if(state.answered%10===0){state.diamonds++;save();toast('Great job! ⭐ +1 🪙 +5 💎 +1')}else toast('Great job! ⭐ +1 🪙 +5');setTimeout(newQuestion,900)}else{btn.classList.add('wrong');state.wrong=(state.wrong||0)+1;stageWrong++;save();beep(230,.18,'square');speak('Try again');toast('Try again');setTimeout(()=>btn.classList.remove('wrong'),500)}}function speakQuestion(){speak(currentQuestion)}
+
+function finishStage(){const reward=completeLearningStage();document.querySelector('.activity').style.display='none';$('stageSummary').classList.add('show');$('summaryStars').textContent='⭐'.repeat(reward.rating)+'☆'.repeat(3-reward.rating);$('summaryReward').textContent='Correct '+stageCorrect+'/10 · +'+reward.coins+' Coins · +'+reward.xp+' XP';speak('Stage complete. Good job '+state.name)}
+function continueAfterStage(){$('stageSummary').classList.remove('show');document.querySelector('.activity').style.display='block';questionNo=1;stageCorrect=0;stageWrong=0;if(currentStage<10)currentStage++;else{showScreen('learn');return}newQuestion()}
+
 function numberToWords(n){
  const one=['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'];
  const tens=['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
  if(n<20)return one[n];if(n===100)return 'One Hundred';return tens[Math.floor(n/10)]+(n%10?' '+one[n%10]:'');
 }
 function renderCard(){
- $('cardNumber').textContent=card;$('cardWord').textContent=numberToWords(card);$('cardObjects').textContent=card<=10?'⭐'.repeat(card):'🔢 '+card;
+ state.flashcard=card;save();$('cardNumber').textContent=card;$('cardWord').textContent=numberToWords(card);$('cardObjects').textContent=card<=10?'⭐'.repeat(card):'🔢 '+card;
  $('cardIndex').textContent=card;$('flashProgress').style.width=card+'%';
 }function nextCard(){card=card===100?1:card+1;renderCard();speakCard()}function prevCard(){card=card===1?100:card-1;renderCard();speakCard()}function speakCard(){speak(numberToWords(card))}
 function toggleAutoPlay(){
@@ -509,10 +530,10 @@ function renderRoom(){
 }
 
 function resetProgress(){if(confirm('Reset all progress?')){state={...DEFAULT,name:state.name};save();toast('Progress reset')}}
-renderStats();renderCard();showScreen('home');
+renderStats();renderCard();showScreen('home');if(!localStorage.getItem('raraFamilySeen')){localStorage.setItem('raraFamilySeen','1');setTimeout(openProfileSwitcher,250)}
 const isiOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 if(isiOS){$('voiceBanner')?.classList.add('show');$('gameVoiceBanner')?.classList.add('show')}
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=3').catch(()=>{}));}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=4').catch(()=>{}));}
 </script>
 </body>
 </html>
