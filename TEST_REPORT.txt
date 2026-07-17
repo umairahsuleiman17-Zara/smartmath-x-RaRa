@@ -1,0 +1,20 @@
+SMART MATH × RARA — GOLD EDITION 4.1
+TEST REPORT
+
+PASSED
+- ZIP extracted successfully.
+- index.html JavaScript syntax checked with Node.js.
+- All required JPG files are present in the same root folder as index.html.
+- Image paths were changed from assets/... to root filenames.
+- manifest.json is valid JSON and supports any screen orientation.
+- Responsive CSS includes phone, tablet, Chromebook and laptop layouts.
+- Learning: 50 stages, 10 questions per stage, counting/addition/subtraction.
+- Flashcards: numbers 1–100 with English voice support.
+- Mini games included: Ice Cream Builder, Bee Trace, Catch Bananas, Puzzle Fun, Shape Match and Colour Splash.
+- Per-profile local saving is included for up to 3 child profiles.
+- Outfit shop, coins, stars, XP, daily reward and parent lock are included.
+- sw.js was added for offline caching after the first online visit.
+
+LIMITATION
+- Browser progress is stored separately on each device. iPhone and Chromebook do not sync without a cloud account system.
+- Automated Chromium screenshot testing could not be completed in this environment because the headless browser process timed out. Static code, file-path and syntax checks were completed.

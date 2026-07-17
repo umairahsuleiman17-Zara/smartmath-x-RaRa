@@ -3,266 +3,186 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<meta name="theme-color" content="#5b21b6">
+<meta name="theme-color" content="#34105d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>SMART MATH × RARA — Gold Edition 3.0</title>
+<title>SMART MATH × RARA — Gold Edition 4.1</title>
 <style>
-:root{
- --purple:#6d28d9;--purple2:#3b116e;--pink:#ec4899;--gold:#fbbf24;
- --green:#52c94f;--blue:#38bdf8;--ink:#43205f;--white:#fff;
-}
+:root{--bg:#16052d;--panel:#461078;--panel2:#731da3;--pink:#f24e9e;--gold:#ffd34d;--green:#68d43e;--blue:#29a8ff;--ink:#40195e}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;min-height:100%;font-family:ui-rounded,"Arial Rounded MT Bold",system-ui,sans-serif;background:#251047;color:var(--ink)}
+html,body{margin:0;min-height:100%;font-family:ui-rounded,"Arial Rounded MT Bold",system-ui,sans-serif;background:var(--bg);color:white}
 button,input{font:inherit}button{border:0;cursor:pointer;touch-action:manipulation}button:active{transform:scale(.97)}
-.app{max-width:760px;min-height:100vh;margin:auto;position:relative;overflow:hidden;background:
-radial-gradient(circle at 14% 11%,#ffffff55 0 3%,transparent 4%),
-radial-gradient(circle at 87% 23%,#ffffff44 0 2%,transparent 3%),
-linear-gradient(180deg,#4d1889 0,#b64eb9 30%,#71d1ff 66%,#75d16a 100%);padding-bottom:78px}
-.topbar{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#4c1d95ed;color:#fff;border-radius:0 0 22px 22px;box-shadow:0 8px 18px #28104966}
-.brand{font-weight:1000;font-size:14px;letter-spacing:.3px}.stats{display:flex;gap:6px}.pill{padding:7px 10px;border-radius:999px;background:#ffffff20;border:2px solid #ffffff3d;font-weight:1000}
-.screen{display:none;min-height:calc(100vh - 78px);padding:10px}.screen.active{display:block}
-.card{background:linear-gradient(180deg,#fffffff2,#fff8ffeb);border:3px solid #ffffffba;border-radius:29px;padding:15px;box-shadow:0 14px 28px #35106445;margin-top:10px;position:relative}
-.logo{text-align:center;font-weight:1000;font-size:clamp(34px,10vw,58px);line-height:.86;color:#6ed548;text-shadow:0 4px 0 #fff,0 7px 0 #673295;letter-spacing:-2px}
-.logo span{display:block;color:#f356a4;font-size:.5em;margin-top:11px;text-shadow:0 3px 0 #fff,0 5px 0 #762869}
-.edition{display:block;width:max-content;margin:12px auto 5px;padding:7px 16px;border-radius:999px;background:linear-gradient(#fff0a7,#e5a315);color:#6f3a00;font-size:13px;font-weight:1000;box-shadow:0 4px 0 #a76c08}
-.speech{background:#fff;border:3px solid #f3b1df;border-radius:21px;padding:11px;text-align:center;font-size:19px;font-weight:1000;color:#77266f;box-shadow:0 6px 0 #d788c3;margin:6px auto 14px}
-.avatar-display{display:flex;justify-content:center;align-items:end;min-height:275px}
-.avatar-svg{width:min(82%,310px);filter:drop-shadow(0 14px 8px #4d246344);animation:float 3s ease-in-out infinite}
-@keyframes float{50%{transform:translateY(-6px)}}
-.wave{transform-origin:302px 213px;animation:wave 1.3s ease-in-out infinite}@keyframes wave{50%{transform:rotate(-13deg)}}
-.primary{width:100%;min-height:62px;border-radius:21px;background:linear-gradient(#75dd69,#43af49);color:#fff;font-size:20px;font-weight:1000;box-shadow:0 7px 0 #278436;margin:12px 0}
-.secondary{padding:11px 15px;border-radius:16px;background:#6d28d9;color:#fff;font-weight:1000;box-shadow:0 4px 0 #45158c}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.tile{min-height:110px;border-radius:23px;padding:12px;color:#fff;font-weight:1000;box-shadow:0 7px 0 #0002;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:16px}.tile b{font-size:40px}
-.purple{background:#8b5cf6}.pink{background:#ec4899}.orange{background:#f59e0b}.blue{background:#0ea5e9}.green{background:#49bd58}.red{background:#ef4444}
-.headrow{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}.headrow h2{margin:0;text-align:center;flex:1}
-.gamebox{background:#fff;border-radius:25px;padding:13px;min-height:420px;box-shadow:0 10px 24px #3f1a6d33;position:relative;overflow:hidden}
-.instruction{text-align:center;background:#f4e7ff;border-radius:18px;padding:11px;font-size:18px;font-weight:1000;margin-bottom:11px}
-.feedback{text-align:center;min-height:31px;font-weight:1000;font-size:19px;margin-top:8px}
-.choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}
-.choice{min-height:62px;border-radius:17px;color:#fff;font-weight:1000;background:#6d28d9;box-shadow:0 5px 0 #43158a}
-.avatar-panel{background:linear-gradient(180deg,#251257,#5e2399);border-radius:26px;padding:12px;color:#fff}
-.gender-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:11px}.gender-btn{padding:12px;border-radius:17px;background:#ffffff17;color:#fff;border:3px solid transparent;font-weight:1000}.gender-btn.active{background:#f15ba5;border-color:#ffd65c}
-.avatar-stage{background:linear-gradient(#8e55da,#f3a7dc 65%,#d8f7ff);border:3px solid #dba6ff;border-radius:24px;min-height:330px;display:flex;justify-content:center;align-items:end;overflow:hidden}
-.tabs{display:flex;gap:7px;overflow:auto;padding:10px 0}.tab{white-space:nowrap;border-radius:999px;padding:9px 14px;background:#7c32b2;color:#fff;font-weight:900}.tab.active{background:#f59e0b;color:#5d2c00}
-.prof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.prof-card{background:#fff;color:#4e2365;border-radius:18px;padding:8px 5px;min-height:128px;position:relative;box-shadow:0 5px 0 #0002;font-weight:900}.prof-card.active{outline:4px solid #ffd34f}.mini-avatar{height:80px;display:flex;align-items:end;justify-content:center;overflow:hidden}.mini-avatar .avatar-svg{width:86px;animation:none;filter:none}.lock{position:absolute;right:5px;top:5px;background:#4b176f;color:#fff;border-radius:999px;padding:4px 7px;font-size:11px}.cost{font-size:12px;color:#8b4f00}
-.avatar-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:11px}
-.reward-box{text-align:center;background:linear-gradient(#d9f4ff,#fff4d1);border-radius:24px;padding:18px}.reward-avatar{height:210px;display:flex;justify-content:center;align-items:end}.reward-avatar .avatar-svg{width:190px}
-.ice-stage{height:235px;display:flex;justify-content:center;align-items:end;position:relative;background:linear-gradient(#c3efff,#f4dcff);border-radius:21px;overflow:hidden}.cone{width:106px;height:135px;background:repeating-linear-gradient(45deg,#d89947 0 8px,#f2be70 8px 16px);clip-path:polygon(0 0,100% 0,50% 100%);position:absolute;bottom:18px}.scoop{width:115px;height:89px;border-radius:60% 60% 45% 45%;position:absolute;bottom:126px;background:#ffc0cb;border:5px solid #ffffffaa;box-shadow:0 8px 0 #0001}
-.color-btn{height:60px;border:4px solid white;border-radius:17px;box-shadow:0 4px 0 #0003;color:white;font-weight:1000;text-shadow:0 2px 2px #0008}
-.trace-area{height:300px;background:linear-gradient(#d8f6ff,#dcffd5);border-radius:21px;position:relative;touch-action:none;overflow:hidden}.trace-dot{position:absolute;width:19px;height:19px;border-radius:50%;background:#8b5cf6;border:3px solid white;transform:translate(-50%,-50%)}.bee{position:absolute;font-size:37px;transform:translate(-50%,-50%);pointer-events:none}.flower{position:absolute;right:13px;bottom:12px;font-size:60px}
-.monkey-stage{height:375px;background:linear-gradient(#a7e7ff,#bde991);border-radius:21px;position:relative;overflow:hidden;touch-action:none}.monkey{position:absolute;bottom:7px;left:50%;transform:translateX(-50%);font-size:70px}.banana{position:absolute;font-size:38px;top:-50px}.scorebig{text-align:center;font-size:20px;font-weight:1000}
-.puzzle{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;max-width:350px;margin:10px auto;background:#582a8d;padding:7px;border-radius:18px}.piece{aspect-ratio:1;border-radius:11px;font-size:34px;font-weight:1000;background:linear-gradient(135deg,#ffd76a,#ff8db8);color:#5b216e;display:flex;align-items:center;justify-content:center}.piece.empty{background:#e9ddf5}
-.match-board{display:grid;grid-template-columns:1fr 1fr;gap:13px}.match-col{display:grid;gap:9px}.match-card{height:70px;border-radius:19px;background:#f2e8ff;border:4px solid transparent;font-size:40px;display:flex;align-items:center;justify-content:center}.match-card.selected{border-color:#f59e0b;background:#fff6c6}.match-card.done{opacity:.35}
-.splash-board{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}.splash-card{height:92px;border-radius:21px;border:5px solid white;box-shadow:0 5px 0 #0002;font-weight:1000;color:white;text-shadow:0 2px 2px #0008;font-size:18px}
-.bottomnav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(760px,100%);height:74px;background:#4c1d95f3;z-index:50;display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -6px 20px #2d0b4d55}.bottomnav button{background:transparent;color:white;font-size:11px;font-weight:900}.bottomnav b{display:block;font-size:24px}
-.toast{position:fixed;left:50%;top:18%;transform:translate(-50%,-20px);background:#fff;color:#5b216e;border-radius:20px;padding:14px 22px;font-weight:1000;font-size:19px;z-index:100;box-shadow:0 10px 30px #0004;opacity:0;pointer-events:none;transition:.25s;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:430px){.screen{padding:8px}.card{padding:12px}.avatar-display{min-height:250px}.prof-grid{gap:7px}.prof-card{min-height:116px;font-size:13px}.mini-avatar{height:72px}.mini-avatar .avatar-svg{width:77px}.gamebox{padding:10px;min-height:405px}}
+.app{max-width:1180px;margin:auto;min-height:100vh;background:
+radial-gradient(circle at 20% 8%,#bd72ff44 0 2px,transparent 3px),
+radial-gradient(circle at 85% 18%,#ffffff44 0 2px,transparent 3px),
+linear-gradient(180deg,#240744,#6b1b94 45%,#32105c);padding-bottom:82px;overflow:hidden}
+.screen{display:none;padding:10px;min-height:calc(100vh - 82px)}.screen.active{display:block}
+.topbar{position:sticky;top:0;z-index:40;background:#35105def;border-bottom:2px solid #a34ee3;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.profile-chip{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#5d1990,#7f28a7);border:2px solid #ac58e5;border-radius:20px;padding:6px 9px;min-width:0}
+.profile-chip img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid #ffd34d}
+.profile-chip div{min-width:0}.profile-chip strong,.profile-chip small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.profile-chip small{font-size:11px}
+.stats{display:flex;gap:6px}.stat{background:#592087;border:2px solid #8d49c8;border-radius:18px;padding:7px 9px;font-weight:1000;font-size:13px}
+.panel{background:linear-gradient(180deg,#651c91ee,#3c0f67ef);border:2px solid #b859e9;border-radius:26px;padding:13px;box-shadow:0 12px 28px #0005;margin-bottom:12px}
+.home-hero{position:relative;min-height:680px;background:url('rara_home.jpg') center/cover;border-radius:28px;overflow:hidden;border:3px solid #b85aec;box-shadow:0 12px 30px #0006}
+.home-overlay{position:absolute;inset:0;background:linear-gradient(180deg,#26063d22,#29033b10 55%,#170325b8)}
+.logo{position:absolute;left:22px;top:18px;font-size:clamp(36px,10vw,65px);font-weight:1000;line-height:.82;color:#8bff3d;text-shadow:0 4px 0 white,0 8px 0 #5f1e8e}
+.logo span{display:block;color:#ff5ca9;font-size:.48em;text-align:center;margin-top:14px}
+.level-card{position:absolute;right:14px;top:20px;width:43%;background:#4c1478e8;border:2px solid #ffd24a;border-radius:20px;padding:13px;box-shadow:0 7px 18px #0005}
+.progress{height:13px;background:#26083f;border-radius:999px;overflow:hidden;margin:8px 0}.progress>div{height:100%;background:linear-gradient(90deg,#ff9d36,#ff4f9d);width:0}
+.greeting{position:absolute;left:39%;top:280px;background:white;color:#532071;border-radius:20px;padding:14px;font-size:18px;font-weight:1000;max-width:54%;box-shadow:0 7px 0 #d694d5}
+.home-buttons{position:absolute;left:39%;right:12px;top:410px;display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.bigbtn{min-height:98px;border-radius:20px;color:white;font-weight:1000;font-size:15px;box-shadow:0 7px 0 #0004;border:2px solid #ffffff66}.bigbtn b{display:block;font-size:34px}.purple{background:linear-gradient(#9a4df0,#6922b0)}.pink{background:linear-gradient(#ff70b9,#d73789)}.orange{background:linear-gradient(#ffb22e,#ec7613)}.blue{background:linear-gradient(#4bc6ff,#167dd0)}.green{background:linear-gradient(#8ee244,#4eb920)}
+.outfit-strip{position:absolute;left:12px;right:12px;bottom:14px;background:#411066ee;border:2px solid #a84cdd;border-radius:22px;padding:10px}
+.outfit-row{display:flex;gap:8px;overflow:auto}.outfit-thumb{min-width:92px;background:#f7dff4;color:#4a1c60;border-radius:15px;padding:5px;border:3px solid transparent}.outfit-thumb.active{border-color:#ffd84f}.outfit-thumb img{width:100%;height:94px;object-fit:cover;border-radius:10px}.outfit-thumb div{text-align:center;font-size:12px;font-weight:1000}
+.headrow{display:flex;align-items:center;gap:8px;margin-bottom:10px}.headrow h2{margin:0;flex:1;text-align:center}.back{background:#7a2bb4;color:white;border-radius:15px;padding:10px 13px;font-weight:1000}
+.profile-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.profile-card{background:linear-gradient(#f9eaff,#e7cafa);color:#4e1d63;border-radius:20px;padding:10px;text-align:center;min-height:210px}.profile-card img{width:100%;height:125px;object-fit:cover;border-radius:15px}.profile-card button{margin-top:8px;width:100%;padding:9px;border-radius:13px;background:#6e28a8;color:white;font-weight:1000}
+.stage-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stage{background:linear-gradient(#fff,#ead7ff);color:#4c1a68;border-radius:18px;padding:12px;min-height:130px;position:relative}.stage.locked{opacity:.55}.stage h3{margin:3px 0}.stage .num{position:absolute;right:10px;top:8px;background:#6d28d9;color:#fff;border-radius:999px;padding:5px 9px;font-size:12px}.stage-progress{height:9px;background:#d7c3e9;border-radius:999px;overflow:hidden}.stage-progress div{height:100%;background:#ec4899}
+.lesson-box,.gamebox,.flashbox{background:#fff;color:#42185d;border-radius:24px;padding:14px;min-height:430px}
+.question-count{text-align:center;font-weight:1000;color:#7a2da3}.question{font-size:26px;text-align:center;font-weight:1000;margin:20px 0}.visual{text-align:center;font-size:43px;min-height:90px}
+.answers{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.answer{min-height:65px;border-radius:17px;background:#7730b0;color:white;font-size:22px;font-weight:1000}
+.feedback{text-align:center;min-height:30px;font-size:18px;font-weight:1000;margin-top:10px}
+.flashnum{font-size:145px;text-align:center;color:#7628b3;font-weight:1000}.flashword{text-align:center;font-size:24px;font-weight:1000}.flashnav{display:flex;justify-content:center;gap:10px;margin-top:22px}
+.game-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.game-card{border-radius:20px;padding:12px;color:white;min-height:130px;font-weight:1000}.game-card b{display:block;font-size:39px}.setbadge{display:inline-block;background:#ffffff2f;padding:4px 8px;border-radius:999px;font-size:11px}
+.choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.color-btn{height:61px;border-radius:17px;border:4px solid white;color:white;font-weight:1000;text-shadow:0 2px 2px #0008}
+.ice-stage{height:220px;background:linear-gradient(#cff1ff,#f4dcff);border-radius:20px;position:relative}.cone{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);width:105px;height:135px;background:repeating-linear-gradient(45deg,#d79945 0 8px,#f0bd6c 8px 16px);clip-path:polygon(0 0,100% 0,50% 100%)}.scoop{position:absolute;bottom:124px;left:50%;transform:translateX(-50%);width:115px;height:88px;border-radius:60% 60% 45% 45%;background:pink;border:5px solid #fff8}
+.trace-area{height:300px;background:linear-gradient(#d9f7ff,#d9ffd2);border-radius:20px;position:relative;touch-action:none}.trace-dot{position:absolute;width:20px;height:20px;border-radius:50%;background:#782bb2;border:3px solid white;transform:translate(-50%,-50%)}.bee{position:absolute;font-size:38px;transform:translate(-50%,-50%)}.flower{position:absolute;right:10px;bottom:10px;font-size:62px}
+.monkey-stage{height:360px;background:linear-gradient(#a7e6ff,#b9e78e);border-radius:20px;position:relative;overflow:hidden;touch-action:none}.monkey{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);font-size:70px}.banana{position:absolute;top:-50px;font-size:39px}
+.puzzle{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;background:#512377;padding:7px;border-radius:16px}.piece{aspect-ratio:1;border-radius:11px;background:linear-gradient(135deg,#ffd76a,#ff8db8);font-size:32px;font-weight:1000;color:#541d67}.piece.empty{background:#e7dced}
+.match-board{display:grid;grid-template-columns:1fr 1fr;gap:12px}.match-col{display:grid;gap:9px}.match{height:70px;border-radius:17px;background:#efe2fa;font-size:38px;border:4px solid transparent}.match.sel{border-color:#f2a313}.match.done{opacity:.3}
+.splash-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.splash{height:95px;border-radius:19px;border:5px solid white;color:white;font-weight:1000;text-shadow:0 2px 2px #0008}
+.parent-box{background:white;color:#4b1d66;border-radius:20px;padding:15px}.bottomnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(1180px,100%);height:74px;background:#2f0754f3;display:grid;grid-template-columns:repeat(5,1fr);z-index:60;border-top:2px solid #8642bb}.bottomnav button{background:transparent;color:white;font-size:11px;font-weight:1000}.bottomnav b{display:block;font-size:24px}
+.toast{position:fixed;top:18%;left:50%;transform:translate(-50%,-15px);background:white;color:#4d1c65;border-radius:18px;padding:14px 20px;font-weight:1000;z-index:100;opacity:0;pointer-events:none;transition:.2s;box-shadow:0 10px 25px #0005}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(min-width:900px){
+ .screen{padding:18px 24px}.home-hero{min-height:720px;background-position:center 28%}
+ .logo{left:38px;top:30px}.level-card{right:28px;top:30px;width:31%}
+ .greeting{left:47%;top:260px;max-width:45%;font-size:22px}
+ .home-buttons{left:47%;right:28px;top:380px;grid-template-columns:repeat(3,1fr)}
+ .stage-grid{grid-template-columns:repeat(4,1fr)}.game-grid{grid-template-columns:repeat(3,1fr)}
+ .profile-grid{grid-template-columns:repeat(4,1fr)}.lesson-box,.gamebox,.flashbox{max-width:900px;margin:auto}
+}
+@media(max-width:520px){
+ .home-hero{min-height:760px}.logo{font-size:39px}.level-card{top:125px;width:47%;font-size:12px}.greeting{top:315px;left:35%;max-width:61%;font-size:15px}.home-buttons{left:35%;top:430px;grid-template-columns:repeat(2,1fr)}.bigbtn{min-height:88px}.outfit-strip{bottom:10px}.stage-grid{grid-template-columns:1fr}.stats .stat:nth-child(3){display:none}
+}
 </style>
 </head>
 <body>
 <div class="app">
- <div class="topbar"><div class="brand">⭐ SMART MATH × RARA</div><div class="stats"><div class="pill">🪙 <span id="coins">120</span></div><div class="pill">⭐ <span id="stars">0</span></div></div></div>
+<header class="topbar">
+ <button class="profile-chip" onclick="show('profiles')"><img id="topAvatar" src="girl_avatar.jpg"><div><strong id="topName">Child 1</strong><small>Tap to switch profile</small></div></button>
+ <div class="stats"><div class="stat">⭐ <span id="stars">0</span></div><div class="stat">🪙 <span id="coins">120</span></div><div class="stat">💎 <span id="gems">0</span></div></div>
+</header>
 
- <section id="home" class="screen active"><div class="card">
-   <div class="logo">SMART MATH<span>× RARA</span></div><div class="edition">GOLD EDITION 3.0</div>
-   <div class="avatar-display" id="homeAvatar"></div>
-   <div class="speech" id="homeGreeting">Hi! Ready to learn and have fun?</div>
-   <button class="primary" onclick="show('learn')">▶ START LEARNING</button>
-   <div class="grid">
-    <button class="tile purple" onclick="show('flash')"><b>🔢</b>Flashcards</button>
-    <button class="tile orange" onclick="show('games')"><b>🎮</b>Mini Games</button>
-    <button class="tile pink" onclick="show('avatar')"><b>👧👦</b>My Avatar</button>
-    <button class="tile blue" onclick="dailyReward()"><b>🎁</b>Daily Reward</button>
-   </div>
- </div></section>
+<section id="profiles" class="screen"><div class="panel"><div class="headrow"><button class="back" onclick="show('home')">← Back</button><h2>Who is learning today?</h2></div><div id="profileGrid" class="profile-grid"></div></div></section>
 
- <section id="learn" class="screen"><div class="card"><div class="headrow"><button class="secondary" onclick="show('home')">← Back</button><h2>Choose to Learn</h2><span></span></div><div class="grid">
-  <button class="tile green" onclick="startQuiz('count')"><b>🍎</b>Counting</button><button class="tile blue" onclick="startQuiz('add')"><b>➕</b>Addition</button><button class="tile pink" onclick="startQuiz('sub')"><b>➖</b>Subtraction</button><button class="tile orange" onclick="startQuiz('shape')"><b>🔺</b>Shapes</button>
- </div></div></section>
-
- <section id="quiz" class="screen"><div class="card"><div class="headrow"><button class="secondary" onclick="show('learn')">← Back</button><h2 id="quizTitle">Learning</h2><span></span></div>
-  <div class="gamebox"><div style="height:125px;display:flex;justify-content:center;align-items:end" id="lessonAvatar"></div><div class="instruction" id="question"></div><div id="visual" style="text-align:center;font-size:46px;min-height:88px"></div><div id="answers" class="choice-grid"></div><div id="quizFeedback" class="feedback"></div></div>
- </div></section>
-
- <section id="flash" class="screen"><div class="card"><div class="headrow"><button class="secondary" onclick="show('home')">← Back</button><h2>Number Flashcards</h2><span></span></div><div class="gamebox" style="display:flex;flex-direction:column;align-items:center;justify-content:center"><div id="flashNum" style="font-size:145px;font-weight:1000;color:#7c3aed">1</div><div id="flashObjects" style="font-size:37px">⭐</div><div style="display:flex;gap:9px;margin-top:26px"><button class="secondary" onclick="flashMove(-1)">←</button><button class="primary" style="width:155px;margin:0" onclick="speakFlash()">🔊 Listen</button><button class="secondary" onclick="flashMove(1)">→</button></div></div></div></section>
-
- <section id="games" class="screen"><div class="card"><div class="headrow"><button class="secondary" onclick="show('home')">← Back</button><h2>Mini Games</h2><span></span></div><div class="grid">
-  <button class="tile pink" onclick="openGame('ice')"><b>🍦</b>Ice Cream Builder</button><button class="tile green" onclick="openGame('bee')"><b>🐝</b>Bee Trace Map</button><button class="tile orange" onclick="openGame('monkey')"><b>🐒</b>Catch Bananas</button><button class="tile purple" onclick="openGame('puzzle')"><b>🧩</b>Puzzle Fun</button><button class="tile blue" onclick="openGame('shapeMatch')"><b>🔷</b>Shape Match</button><button class="tile red" onclick="openGame('colour')"><b>🎨</b>Colour Splash</button>
- </div></div></section>
-
- <section id="game" class="screen"><div class="card"><div class="headrow"><button class="secondary" onclick="leaveGame()">← Games</button><h2 id="gameTitle">Game</h2><span></span></div><div class="gamebox" id="gameContent"></div></div></section>
-
- <section id="avatar" class="screen"><div class="card"><div class="headrow"><button class="secondary" onclick="show('home')">← Back</button><h2>My Avatar</h2><span></span></div>
-  <div class="avatar-panel">
-   <div class="gender-row"><button id="girlBtn" class="gender-btn" onclick="setGender('girl')">👧 Girl</button><button id="boyBtn" class="gender-btn" onclick="setGender('boy')">👦 Boy</button></div>
-   <div class="avatar-stage" id="avatarStage"></div>
-   <div class="tabs"><button class="tab active">All</button><button class="tab">Common</button><button class="tab">Rare</button><button class="tab">Epic</button></div>
-   <div class="prof-grid" id="professionGrid"></div>
-   <div class="avatar-actions"><button class="primary" onclick="saveAvatar()">💾 Save Avatar</button><button class="primary" style="background:linear-gradient(#ffd660,#e6a919);box-shadow:0 7px 0 #a56d08;color:#603700" onclick="randomAvatar()">🎲 Surprise Me</button></div>
+<section id="home" class="screen active">
+ <div class="home-hero"><div class="home-overlay"></div>
+  <div class="logo">SMART<br>MATH<span>× RARA</span></div>
+  <div class="level-card"><b>⭐ Level <span id="homeLevel">1</span></b><div class="progress"><div id="homeProgress"></div></div><small><span id="homeXP">0</span> / 100 XP</small><hr style="border-color:#ffffff35"><b>🔥 Streak: <span id="streak">1</span> day</b></div>
+  <div class="greeting">Hi <span id="greetName">friend</span>! 💜<br>Ready to learn and play today?</div>
+  <div class="home-buttons">
+   <button class="bigbtn purple" onclick="show('stages')"><b>📖</b>Learn</button>
+   <button class="bigbtn pink" onclick="show('flashcards')"><b>🔢</b>Flashcards</button>
+   <button class="bigbtn orange" onclick="show('games')"><b>🎮</b>Mini Games</button>
+   <button class="bigbtn blue" onclick="dailyReward()"><b>🎁</b>Daily Reward</button>
+   <button class="bigbtn green" onclick="show('outfits')"><b>👗</b>Outfit Shop</button>
+   <button class="bigbtn purple" onclick="show('parent')"><b>🏆</b>Achievements</button>
   </div>
- </div></section>
+  <div class="outfit-strip"><b>🧥 My Outfits — <span id="unlockCount">1</span>/12 Unlocked</b><div id="homeOutfits" class="outfit-row"></div></div>
+ </div>
+</section>
 
- <section id="reward" class="screen"><div class="card"><div class="reward-box"><h2>Great job! 🎉</h2><div class="reward-avatar" id="rewardAvatar"></div><div style="font-size:65px">⭐⭐⭐</div><h3 id="rewardText">You earned rewards!</h3><button class="primary" onclick="show('home')">Back Home</button></div></div></section>
+<section id="stages" class="screen"><div class="panel"><div class="headrow"><button class="back" onclick="show('home')">← Back</button><h2>Learning Stages</h2></div><p style="text-align:center">50 stages • 10 questions each • progress saved automatically</p><div id="stageGrid" class="stage-grid"></div></div></section>
+
+<section id="lesson" class="screen"><div class="panel"><div class="headrow"><button class="back" onclick="show('stages')">← Stages</button><h2 id="lessonTitle">Learning</h2></div><div class="lesson-box"><div class="question-count" id="questionCount">Question 1 of 10</div><div class="progress"><div id="lessonProgress"></div></div><div class="question" id="question"></div><div class="visual" id="visual"></div><div class="answers" id="answers"></div><div class="feedback" id="feedback"></div></div></div></section>
+
+<section id="flashcards" class="screen"><div class="panel"><div class="headrow"><button class="back" onclick="show('home')">← Back</button><h2>Number Flashcards 1–100</h2></div><div class="flashbox"><div class="flashnum" id="flashNum">1</div><div class="flashword" id="flashWord">One</div><div style="text-align:center;font-size:35px" id="flashDots">⭐</div><div class="flashnav"><button class="back" onclick="moveFlash(-1)">←</button><button class="back" onclick="speakFlash()">🔊 Listen</button><button class="back" onclick="moveFlash(1)">→</button></div><div style="margin-top:16px"><input id="flashSlider" type="range" min="1" max="100" value="1" style="width:100%" oninput="setFlash(+this.value)"></div></div></div></section>
+
+<section id="games" class="screen"><div class="panel"><div class="headrow"><button class="back" onclick="show('home')">← Back</button><h2>Mini Games</h2></div><p style="text-align:center">Each game has 20 sets. Play to earn coins!</p><div class="game-grid">
+<button class="game-card pink" onclick="openGame('ice')"><b>🍦</b>Ice Cream Builder<br><span class="setbadge">20 sets</span></button>
+<button class="game-card green" onclick="openGame('bee')"><b>🐝</b>Bee Trace Map<br><span class="setbadge">20 sets</span></button>
+<button class="game-card orange" onclick="openGame('monkey')"><b>🐒</b>Catch Bananas<br><span class="setbadge">20 rounds</span></button>
+<button class="game-card purple" onclick="openGame('puzzle')"><b>🧩</b>Puzzle Fun<br><span class="setbadge">20 boards</span></button>
+<button class="game-card blue" onclick="openGame('shape')"><b>🔷</b>Shape Match<br><span class="setbadge">20 sets</span></button>
+<button class="game-card pink" onclick="openGame('colour')"><b>🎨</b>Colour Splash<br><span class="setbadge">20 sets</span></button>
+</div></div></section>
+
+<section id="game" class="screen"><div class="panel"><div class="headrow"><button class="back" onclick="leaveGame()">← Games</button><h2 id="gameTitle">Game</h2></div><div class="gamebox" id="gameContent"></div></div></section>
+
+<section id="outfits" class="screen"><div class="panel"><div class="headrow"><button class="back" onclick="show('home')">← Back</button><h2>Outfit Shop</h2></div><p style="text-align:center">Unlock profession outfits with coins. Every child has their own collection.</p><div id="outfitShop" class="profile-grid"></div></div></section>
+
+<section id="parent" class="screen"><div class="panel"><div class="headrow"><button class="back" onclick="show('home')">← Back</button><h2>Parent Area</h2></div><div class="parent-box" id="parentContent"></div></div></section>
 </div>
 
-<nav class="bottomnav"><button onclick="show('home')"><b>🏠</b>Home</button><button onclick="show('learn')"><b>📚</b>Learn</button><button onclick="show('games')"><b>🎮</b>Games</button><button onclick="show('avatar')"><b>👧👦</b>Avatar</button><button onclick="parentLock()"><b>🔒</b>Parent</button></nav>
+<nav class="bottomnav"><button onclick="show('home')"><b>🏠</b>Home</button><button onclick="show('stages')"><b>📖</b>Learn</button><button onclick="show('games')"><b>🎮</b>Games</button><button onclick="show('outfits')"><b>👗</b>Dress Up</button><button onclick="openParent()"><b>🔒</b>Parent</button></nav>
 <div class="toast" id="toast"></div>
 
 <script>
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const defaults={coins:120,stars:0,gender:'girl',profession:'casual',unlocked:['casual','doctor','chef'],name:'Rara'};
-let state;
-try{state={...defaults,...JSON.parse(localStorage.getItem('smartMathRara3')||'{}')}}catch(e){state={...defaults}}
-if(!Array.isArray(state.unlocked))state.unlocked=[...defaults.unlocked];
-
-const professions=[
- {id:'casual',name:'Casual',icon:'💗',cost:0,tier:'Common'},
- {id:'doctor',name:'Doctor',icon:'🩺',cost:0,tier:'Common'},
- {id:'chef',name:'Chef',icon:'👩‍🍳',cost:0,tier:'Common'},
- {id:'pilot',name:'Pilot',icon:'✈️',cost:160,tier:'Rare'},
- {id:'teacher',name:'Teacher',icon:'📚',cost:140,tier:'Rare'},
- {id:'scientist',name:'Scientist',icon:'🔬',cost:180,tier:'Rare'},
- {id:'police',name:'Police',icon:'👮',cost:220,tier:'Epic'},
- {id:'firefighter',name:'Firefighter',icon:'🚒',cost:240,tier:'Epic'},
- {id:'astronaut',name:'Astronaut',icon:'🚀',cost:300,tier:'Epic'},
- {id:'engineer',name:'Engineer',icon:'🛠️',cost:250,tier:'Epic'},
- {id:'artist',name:'Artist',icon:'🎨',cost:120,tier:'Rare'},
- {id:'farmer',name:'Farmer',icon:'🌱',cost:100,tier:'Common'}
+const outfits=[
+{id:'casual',name:'Casual',cost:0},{id:'doctor',name:'Doctor',cost:200},{id:'pilot',name:'Pilot',cost:250},{id:'chef',name:'Chef',cost:200},
+{id:'teacher',name:'Teacher',cost:200},{id:'astronaut',name:'Astronaut',cost:300},{id:'police',name:'Police',cost:250},{id:'firefighter',name:'Firefighter',cost:250},
+{id:'scientist',name:'Scientist',cost:220},{id:'engineer',name:'Engineer',cost:250},{id:'artist',name:'Artist',cost:180},{id:'farmer',name:'Farmer',cost:180}
 ];
-
-function save(){localStorage.setItem('smartMathRara3',JSON.stringify(state));updateStats()}
-function updateStats(){$('#coins').textContent=state.coins;$('#stars').textContent=state.stars}
+const defaultProfile=i=>({name:`Child ${i+1}`,gender:i===1?'boy':'girl',coins:120,stars:0,gems:0,xp:0,streak:1,currentStage:1,stageProgress:{},flash:1,unlocked:['casual'],outfit:'casual',gameSets:{ice:1,bee:1,monkey:1,puzzle:1,shape:1,colour:1},lastReward:''});
+let db;
+try{db=JSON.parse(localStorage.getItem('smartMathRara4')||'null')}catch(e){}
+if(!db||!Array.isArray(db.profiles)){db={active:0,profiles:[defaultProfile(0),null,null]}}
+function p(){return db.profiles[db.active]}
+function save(){localStorage.setItem('smartMathRara4',JSON.stringify(db));renderHeader()}
 function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),1700)}
-function show(id){$$('.screen').forEach(x=>x.classList.remove('active'));$('#'+id).classList.add('active');if(id==='avatar')renderAvatarPage();window.scrollTo(0,0)}
-function speak(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=.86;u.pitch=1.12;speechSynthesis.speak(u)}catch(e){}}
-function reward(n=1){state.stars+=n;state.coins+=n*5;save();renderEverywhere();toast('Great job! ⭐ +'+n)}
-function professionData(id){return professions.find(p=>p.id===id)||professions[0]}
-
-function avatarSVG(gender=state.gender,profession=state.profession,mini=false){
- const girl=gender==='girl';
- const looks={
-  casual:{top:girl?'#ec4899':'#3574d4',bottom:girl?'#7c3aed':'#274b99',badge:'R',hat:''},
-  doctor:{top:'#ffffff',bottom:'#4c8cc7',badge:'✚',hat:''},
-  chef:{top:'#fff6e8',bottom:'#d9d9e8',badge:'🍳',hat:'chef'},
-  pilot:{top:'#203968',bottom:'#172b50',badge:'✈',hat:'pilot'},
-  teacher:{top:girl?'#df7cae':'#4d79b8',bottom:'#42326f',badge:'A+',hat:''},
-  scientist:{top:'#e9f7ff',bottom:'#4d83a8',badge:'⚗',hat:''},
-  police:{top:'#244c86',bottom:'#172c51',badge:'★',hat:'police'},
-  firefighter:{top:'#c43b35',bottom:'#68241f',badge:'🔥',hat:'fire'},
-  astronaut:{top:'#f4f4f5',bottom:'#9ca3af',badge:'🚀',hat:'space'},
-  engineer:{top:'#f0a928',bottom:'#4b5563',badge:'⚙',hat:'hard'},
-  artist:{top:'#ec7e4a',bottom:'#445e86',badge:'🎨',hat:'beret'},
-  farmer:{top:'#65a84a',bottom:'#7c4d2b',badge:'🌱',hat:'straw'}
- }[profession]||{top:'#ec4899',bottom:'#7c3aed',badge:'R',hat:''};
- const hair=girl?'#3b1f27':'#241b1b', skin='#f4c3a5';
- let headwear='';
- if(girl){
-  headwear=`<path d="M116 165 Q90 68 210 36 Q330 68 304 165 L290 242 Q210 274 130 242Z" fill="#5a238f"/>
-  <path d="M130 141 Q145 58 210 56 Q276 58 290 141 Q259 94 210 90 Q160 94 130 141" fill="#5a238f"/>`;
- }else{
-  headwear=`<path d="M132 126 Q154 55 210 58 Q270 57 289 126 Q263 91 210 91 Q158 91 132 126Z" fill="${hair}"/>`;
- }
- const hats={
-  chef:`<path d="M146 67 Q142 31 176 36 Q189 7 214 36 Q240 6 253 37 Q289 32 284 69Z" fill="#fff" stroke="#ddd" stroke-width="4"/>`,
-  pilot:`<path d="M128 85 Q210 35 292 85 L281 112 Q210 89 139 112Z" fill="#172b50"/><path d="M148 91 Q210 73 272 91" stroke="#f4c44d" stroke-width="8"/>`,
-  police:`<path d="M128 84 Q210 39 292 84 L282 111 Q210 91 138 111Z" fill="#1c3e72"/><circle cx="210" cy="80" r="13" fill="#f5c84b"/>`,
-  fire:`<path d="M139 94 Q143 34 210 30 Q277 34 281 94Z" fill="#d6362d"/><rect x="130" y="88" width="160" height="25" rx="12" fill="#f2d34d"/>`,
-  space:`<circle cx="210" cy="137" r="105" fill="#d9e7f4" opacity=".55" stroke="#fff" stroke-width="9"/>`,
-  hard:`<path d="M131 95 Q141 37 210 35 Q279 37 289 95Z" fill="#f2b92f"/><rect x="124" y="90" width="172" height="21" rx="10" fill="#d89b17"/>`,
-  beret:`<ellipse cx="201" cy="72" rx="78" ry="35" fill="#b8325d"/><circle cx="237" cy="44" r="10" fill="#b8325d"/>`,
-  straw:`<ellipse cx="210" cy="91" rx="103" ry="27" fill="#d9a63f"/><path d="M149 88 Q157 35 210 36 Q264 35 272 88Z" fill="#edc56a"/>`
- }[looks.hat]||'';
- const faceY=145;
- return `<svg class="avatar-svg" viewBox="0 0 420 520" aria-label="${gender} ${profession} avatar">
- <ellipse cx="210" cy="498" rx="116" ry="17" fill="#4a236030"/>
- ${headwear}${hats}
- <circle cx="210" cy="${faceY}" r="79" fill="${skin}"/>
- <ellipse cx="177" cy="145" rx="13" ry="18" fill="#352139"/><ellipse cx="243" cy="145" rx="13" ry="18" fill="#352139"/><circle cx="181" cy="139" r="4" fill="#fff"/><circle cx="247" cy="139" r="4" fill="#fff"/>
- <path d="M181 183 Q210 208 240 183" fill="none" stroke="#b34c59" stroke-width="7" stroke-linecap="round"/><circle cx="157" cy="173" r="12" fill="#ef9d9d66"/><circle cx="263" cy="173" r="12" fill="#ef9d9d66"/>
- <path d="M137 237 Q210 214 283 237 L303 405 Q210 448 117 405Z" fill="${looks.top}"/><path d="M143 365 Q210 390 277 365 L291 432 Q210 460 129 432Z" fill="${looks.bottom}"/>
- <circle cx="210" cy="319" r="28" fill="#ffffffbb"/><text x="210" y="329" text-anchor="middle" font-size="27" font-weight="900" fill="#642b82">${looks.badge}</text>
- <path d="M144 268 Q89 300 76 349" fill="none" stroke="${skin}" stroke-width="34" stroke-linecap="round"/>
- <g class="wave"><path d="M276 268 Q337 237 338 179" fill="none" stroke="${skin}" stroke-width="34" stroke-linecap="round"/><circle cx="338" cy="165" r="22" fill="${skin}"/></g>
- <path d="M157 422 L151 481" stroke="${looks.bottom}" stroke-width="42" stroke-linecap="round"/><path d="M263 422 L269 481" stroke="${looks.bottom}" stroke-width="42" stroke-linecap="round"/>
- <ellipse cx="141" cy="487" rx="42" ry="19" fill="#fff"/><ellipse cx="279" cy="487" rx="42" ry="19" fill="#fff"/>
- </svg>`;
+function show(id){$$('.screen').forEach(x=>x.classList.remove('active'));$('#'+id).classList.add('active');if(id==='profiles')renderProfiles();if(id==='home')renderHome();if(id==='stages')renderStages();if(id==='outfits')renderOutfits();if(id==='parent')renderParent();window.scrollTo(0,0)}
+function avatarSrc(profile=p()){return profile.gender==='boy'?'boy_avatar.jpg':'girl_avatar.jpg'}
+function renderHeader(){const q=p();$('#topName').textContent=q.name;$('#topAvatar').src=avatarSrc(q);$('#stars').textContent=q.stars;$('#coins').textContent=q.coins;$('#gems').textContent=q.gems}
+function renderProfiles(){
+ $('#profileGrid').innerHTML=db.profiles.map((x,i)=>x?`<div class="profile-card"><img src="${avatarSrc(x)}"><h3>${x.name}</h3><small>Level ${Math.floor(x.xp/100)+1} • ⭐ ${x.stars}</small><button onclick="switchProfile(${i})">Select</button><button onclick="editProfile(${i})">Edit</button></div>`:`<div class="profile-card"><div style="font-size:75px;margin:28px 0">➕</div><h3>Add Child</h3><button onclick="addProfile(${i})">Create Profile</button></div>`).join('')
 }
-
-function renderEverywhere(){
- $('#homeAvatar').innerHTML=avatarSVG();
- $('#lessonAvatar').innerHTML=avatarSVG(state.gender,state.profession,true);
- $('#rewardAvatar').innerHTML=avatarSVG();
- $('#homeGreeting').innerHTML=`Hi ${state.name}! 💜<br>Ready to learn and have fun?`;
- updateStats()
-}
-function renderAvatarPage(){
- $('#girlBtn').classList.toggle('active',state.gender==='girl');$('#boyBtn').classList.toggle('active',state.gender==='boy');
- $('#avatarStage').innerHTML=avatarSVG();
- $('#professionGrid').innerHTML=professions.map(p=>{
-   const unlocked=state.unlocked.includes(p.id),active=state.profession===p.id;
-   return `<button class="prof-card ${active?'active':''}" onclick="chooseProfession('${p.id}')">
-    ${unlocked?'':`<span class="lock">🔒 ${p.cost}</span>`}
-    <div class="mini-avatar">${avatarSVG(state.gender,p.id,true)}</div>
-    <div>${p.name}</div><div class="cost">${unlocked?p.tier:'🪙 '+p.cost}</div>
-   </button>`
- }).join('')
-}
-function setGender(g){state.gender=g;save();renderEverywhere();renderAvatarPage();toast(g==='girl'?'Girl avatar selected 👧':'Boy avatar selected 👦')}
-function chooseProfession(id){
- const p=professionData(id);
- if(!state.unlocked.includes(id)){
-  if(state.coins<p.cost){toast(`Need ${p.cost-state.coins} more coins 🔒`);return}
-  if(!confirm(`Unlock ${p.name} for ${p.cost} coins?`))return;
-  state.coins-=p.cost;state.unlocked.push(id);toast(`${p.name} unlocked! 🎉`)
- }
- state.profession=id;save();renderEverywhere();renderAvatarPage();speak(`${p.name} outfit selected`)
-}
-function saveAvatar(){save();renderEverywhere();toast('Avatar saved on this device 💾');show('home')}
-function randomAvatar(){const unlocked=professions.filter(p=>state.unlocked.includes(p.id));state.gender=Math.random()>.5?'girl':'boy';state.profession=unlocked[Math.floor(Math.random()*unlocked.length)].id;save();renderEverywhere();renderAvatarPage();toast('Surprise avatar ready! 🎲')}
-
-function dailyReward(){const d=new Date().toDateString();if(state.rewardDay===d){toast('Reward already collected today 💜');return}state.rewardDay=d;state.coins+=25;state.stars+=2;save();renderEverywhere();$('#rewardText').textContent='Daily reward: 25 coins + 2 stars!';show('reward')}
-
-let quizMode='count';
-function startQuiz(m){quizMode=m;show('quiz');newQuestion()}
-function newQuestion(){
- let a=1+Math.floor(Math.random()*5),b=1+Math.floor(Math.random()*5),q='',visual='',ans,opts;
- if(quizMode==='count'){ans=a;q='How many stars?';visual='⭐'.repeat(a);opts=[ans,ans+1,Math.max(0,ans-1)]}
- if(quizMode==='add'){ans=a+b;q=`What is ${a} + ${b}?`;visual='🍎'.repeat(a)+' + '+'🍎'.repeat(b);opts=[ans,ans+1,Math.max(0,ans-1)]}
- if(quizMode==='sub'){if(b>a)[a,b]=[b,a];ans=a-b;q=`What is ${a} − ${b}?`;visual='🧸'.repeat(a);opts=[ans,ans+1,Math.max(0,ans-1)]}
- if(quizMode==='shape'){const arr=[['Circle','●'],['Triangle','▲'],['Square','■'],['Star','★']][Math.floor(Math.random()*4)];ans=arr[0];q='What shape is this?';visual=arr[1];opts=shuffle(['Circle','Triangle','Square','Star']).slice(0,3);if(!opts.includes(ans))opts[0]=ans}
- $('#question').textContent=q;$('#visual').textContent=visual;$('#quizFeedback').textContent='';$('#answers').innerHTML=shuffle(opts).map(x=>`<button class="choice" onclick='checkQuiz(${JSON.stringify(x)},${JSON.stringify(ans)})'>${x}</button>`).join('')
-}
-function checkQuiz(x,ans){if(x===ans){$('#quizFeedback').textContent='✅ Great job!';reward();setTimeout(newQuestion,800)}else{$('#quizFeedback').textContent='Try again, love 💜';speak('Try again')}}
-let flash=1;
-function flashMove(n){flash=Math.min(10,Math.max(1,flash+n));$('#flashNum').textContent=flash;$('#flashObjects').textContent='⭐'.repeat(flash)}
-function speakFlash(){speak(String(flash))}
-
-let currentGame=null,monkeyTimer=null,traceIndex=0,puzzleArr=[],selectedShape=null,matched=0;
-function openGame(g){currentGame=g;show('game');const titles={ice:'Ice Cream Builder',bee:'Bee Trace Map',monkey:'Catch the Bananas',puzzle:'Puzzle Fun',shapeMatch:'Shape Match',colour:'Colour Splash'};$('#gameTitle').textContent=titles[g];({ice:initIce,bee:initBee,monkey:initMonkey,puzzle:initPuzzle,shapeMatch:initShapeMatch,colour:initColour}[g])()}
-function leaveGame(){if(monkeyTimer)clearInterval(monkeyTimer);monkeyTimer=null;show('games')}
-const colours=[['Red','#ef4444'],['Blue','#3b82f6'],['Green','#22c55e'],['Yellow','#d7ad00'],['Purple','#8b5cf6'],['Pink','#ec4899']];
+function switchProfile(i){db.active=i;save();show('home');toast(`Welcome, ${p().name}!`)}
+function addProfile(i){const name=prompt('Child name:')||`Child ${i+1}`;const g=confirm('Press OK for Girl, Cancel for Boy')?'girl':'boy';db.profiles[i]=defaultProfile(i);db.profiles[i].name=name.slice(0,18);db.profiles[i].gender=g;db.active=i;save();show('home')}
+function editProfile(i){const x=db.profiles[i],name=prompt('Child name:',x.name);if(name)x.name=name.slice(0,18);if(confirm('Change gender?'))x.gender=x.gender==='girl'?'boy':'girl';save();renderProfiles()}
+function renderHome(){const q=p(),lvl=Math.floor(q.xp/100)+1;$('#homeLevel').textContent=lvl;$('#homeXP').textContent=q.xp%100;$('#homeProgress').style.width=(q.xp%100)+'%';$('#streak').textContent=q.streak;$('#greetName').textContent=q.name;$('#unlockCount').textContent=q.unlocked.length;$('#homeOutfits').innerHTML=outfits.slice(0,6).map(o=>`<button class="outfit-thumb ${q.outfit===o.id?'active':''}" onclick="chooseOutfit('${o.id}')"><img src="${o.id}.jpg"><div>${o.name}${q.unlocked.includes(o.id)?'':' 🔒'}</div></button>`).join('');renderHeader()}
+function chooseOutfit(id){const q=p(),o=outfits.find(x=>x.id===id);if(!q.unlocked.includes(id)){toast(`Unlock ${o.name} in Outfit Shop`);show('outfits');return}q.outfit=id;save();renderHome();toast(`${o.name} selected`)}
+function renderOutfits(){const q=p();$('#outfitShop').innerHTML=outfits.map(o=>`<div class="profile-card"><img src="${o.id}.jpg"><h3>${o.name}</h3><small>${q.unlocked.includes(o.id)?'Unlocked':`🪙 ${o.cost}`}</small><button onclick="buyOutfit('${o.id}')">${q.unlocked.includes(o.id)?(q.outfit===o.id?'Selected':'Wear'):'Unlock'}</button></div>`).join('')}
+function buyOutfit(id){const q=p(),o=outfits.find(x=>x.id===id);if(q.unlocked.includes(id)){q.outfit=id;save();renderOutfits();toast(`${o.name} selected`);return}if(q.coins<o.cost){toast(`You need ${o.cost-q.coins} more coins`);return}if(confirm(`Unlock ${o.name} for ${o.cost} coins?`)){q.coins-=o.cost;q.unlocked.push(id);q.outfit=id;save();renderOutfits();toast(`${o.name} unlocked! 🎉`)}}
+function dailyReward(){const q=p(),d=new Date().toDateString();if(q.lastReward===d){toast('Daily reward already collected');return}q.lastReward=d;q.coins+=30;q.stars+=3;q.xp+=15;save();renderHome();toast('Daily reward: 30 coins + 3 stars!')}
+function stageTopic(n){if(n<=17)return'Counting';if(n<=34)return'Addition';return'Subtraction'}
+function renderStages(){const q=p();$('#stageGrid').innerHTML=Array.from({length:50},(_,i)=>{const n=i+1,done=q.stageProgress[n]||0,locked=n>q.currentStage;return `<button class="stage ${locked?'locked':''}" ${locked?'disabled':''} onclick="startStage(${n})"><span class="num">Stage ${n}</span><h3>${stageTopic(n)}</h3><p>${n<=17?'Numbers and quantities':n<=34?'Add numbers up to 20':'Subtract numbers up to 20'}</p><div class="stage-progress"><div style="width:${done*10}%"></div></div><small>${done}/10 questions</small></button>`}).join('')}
+let stage=1,qIndex=0,correctAnswer=0;
+function startStage(n){stage=n;qIndex=p().stageProgress[n]||0;if(qIndex>=10)qIndex=0;show('lesson');newQuestion()}
+function newQuestion(){const topic=stageTopic(stage);$('#lessonTitle').textContent=`Stage ${stage}: ${topic}`;$('#questionCount').textContent=`Question ${qIndex+1} of 10`;$('#lessonProgress').style.width=(qIndex*10)+'%';$('#feedback').textContent='';let a,b,text,visual;
+if(topic==='Counting'){a=1+((stage*3+qIndex*2)%20);correctAnswer=a;text='How many stars are there?';visual='⭐'.repeat(Math.min(a,20))}
+if(topic==='Addition'){a=(stage+qIndex)%11;b=(stage*2+qIndex)%11;correctAnswer=a+b;text=`What is ${a} + ${b}?`;visual='🍎'.repeat(Math.min(a,10))+' + '+'🍎'.repeat(Math.min(b,10))}
+if(topic==='Subtraction'){a=5+((stage+qIndex)%16);b=(stage*2+qIndex)% (a+1);correctAnswer=a-b;text=`What is ${a} − ${b}?`;visual='🧸'.repeat(Math.min(a,20))}
+$('#question').textContent=text;$('#visual').textContent=visual;const opts=shuffle([correctAnswer,correctAnswer+1,Math.max(0,correctAnswer-1)]);$('#answers').innerHTML=opts.map(x=>`<button class="answer" onclick="answerQuestion(${x})">${x}</button>`).join('')}
+function answerQuestion(x){if(x!==correctAnswer){$('#feedback').textContent='Try again 💜';speak('Try again');return}const q=p();qIndex++;q.stageProgress[stage]=Math.max(q.stageProgress[stage]||0,qIndex);q.coins+=3;q.stars+=1;q.xp+=5;if(qIndex>=10){q.currentStage=Math.max(q.currentStage,Math.min(50,stage+1));save();$('#feedback').textContent='Stage complete! +30 bonus coins 🎉';q.coins+=30;q.xp+=20;save();setTimeout(()=>show('stages'),1100)}else{save();$('#feedback').textContent='Great job! +3 coins';setTimeout(newQuestion,650)}}
 function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function speak(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=.85;u.pitch=1.1;speechSynthesis.speak(u)}catch(e){}}
+const ones=['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'];const tens=['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
+function numberWord(n){if(n<20)return ones[n];if(n===100)return'One Hundred';return tens[Math.floor(n/10)]+(n%10?' '+ones[n%10]:'')}
+function setFlash(n){const q=p();q.flash=Math.max(1,Math.min(100,n));save();$('#flashNum').textContent=q.flash;$('#flashWord').textContent=numberWord(q.flash);$('#flashDots').textContent=q.flash<=10?'⭐'.repeat(q.flash):'🔢';$('#flashSlider').value=q.flash}
+function moveFlash(d){setFlash(p().flash+d)}
+function speakFlash(){speak(numberWord(p().flash))}
+let currentGame='',timer=null,setNo=1,traceIndex=0,puzzle=[],selected=null,matched=0;
+const colours=[['Red','#ef4444'],['Blue','#3b82f6'],['Green','#22c55e'],['Yellow','#d7ad00'],['Purple','#8b5cf6'],['Pink','#ec4899']];
+function openGame(g){currentGame=g;setNo=p().gameSets[g]||1;show('game');$('#gameTitle').textContent={ice:'Ice Cream Builder',bee:'Bee Trace Map',monkey:'Catch Bananas',puzzle:'Puzzle Fun',shape:'Shape Match',colour:'Colour Splash'}[g];({ice:initIce,bee:initBee,monkey:initMonkey,puzzle:initPuzzle,shape:initShape,colour:initColour}[g])()}
+function leaveGame(){if(timer)clearInterval(timer);timer=null;show('games')}
+function finishGame(coins=10){const q=p();q.coins+=coins;q.stars+=1;q.xp+=5;q.gameSets[currentGame]=(setNo%20)+1;save();toast(`Set ${setNo} complete! +${coins} coins`)}
+function initIce(){const target=colours[(setNo-1)%colours.length],opts=shuffle([target,...shuffle(colours.filter(c=>c[0]!==target[0])).slice(0,4)]);$('#gameContent').innerHTML=`<div class="question-count">Set ${setNo} of 20</div><div class="question">Make a ${target[0]} ice cream!</div><div class="ice-stage"><div class="scoop" id="scoop"></div><div class="cone"></div></div><div class="choice-grid">${opts.map(c=>`<button class="color-btn" style="background:${c[1]}" onclick="icePick('${c[0]}','${c[1]}','${target[0]}')">${c[0]}</button>`).join('')}</div><div id="gameFeedback" class="feedback"></div>`}
+function icePick(n,h,t){$('#scoop').style.background=h;if(n===t){$('#gameFeedback').textContent='Perfect!';finishGame();setTimeout(()=>{setNo=p().gameSets.ice;initIce()},700)}else $('#gameFeedback').textContent=`Try ${t}`}
+function initBee(){traceIndex=0;const pts=[[8,80],[18,61],[28,72],[39,49],[50,62],[61,41],[73,54],[84,34],[94,22]];$('#gameContent').innerHTML=`<div class="question-count">Set ${setNo} of 20</div><div class="question">Trace the dots to the flower</div><div class="trace-area" id="traceArea"><div class="bee" id="bee" style="left:${pts[0][0]}%;top:${pts[0][1]}%">🐝</div>${pts.map((x,i)=>`<div class="trace-dot" style="left:${x[0]}%;top:${x[1]}%;${i===0?'background:#f59e0b':''}"></div>`).join('')}<div class="flower">🌸</div></div><div id="gameFeedback" class="feedback">Start at the orange dot</div>`;const area=$('#traceArea');const move=e=>{e.preventDefault?.();const t=e.touches?e.touches[0]:e,d=$$('.trace-dot')[traceIndex];if(!d)return;const r=d.getBoundingClientRect();if(Math.hypot(t.clientX-r.left-r.width/2,t.clientY-r.top-r.height/2)<39){d.style.background='#22c55e';$('#bee').style.left=d.style.left;$('#bee').style.top=d.style.top;traceIndex++;if(traceIndex===$$('.trace-dot').length){finishGame(12);$('#gameFeedback').textContent='Bee found the flower!';setTimeout(()=>{setNo=p().gameSets.bee;initBee()},800)}}};area.addEventListener('pointerdown',move);area.addEventListener('pointermove',move);area.addEventListener('touchmove',move,{passive:false})}
+function initMonkey(){let score=0,time=18;$('#gameContent').innerHTML=`<div class="question-count">Round ${setNo} of 20 • 🍌 <span id="mScore">0</span> • ⏱ <span id="mTime">18</span></div><div class="monkey-stage" id="monkeyStage"><div class="monkey" id="monkey">🐒</div></div>`;const st=$('#monkeyStage'),m=$('#monkey');const move=e=>{e.preventDefault?.();const r=st.getBoundingClientRect(),t=e.touches?e.touches[0]:e;m.style.left=Math.max(35,Math.min(r.width-35,t.clientX-r.left))+'px'};st.addEventListener('pointermove',move);st.addEventListener('pointerdown',move);st.addEventListener('touchmove',move,{passive:false});const drop=()=>{const b=document.createElement('div');b.className='banana';b.textContent='🍌';b.style.left=(8+Math.random()*84)+'%';st.appendChild(b);let y=-45;const f=setInterval(()=>{y+=6;b.style.top=y+'px';const br=b.getBoundingClientRect(),mr=m.getBoundingClientRect();if(br.bottom>mr.top&&br.left<mr.right&&br.right>mr.left){score++;$('#mScore').textContent=score;clearInterval(f);b.remove()}else if(y>st.clientHeight){clearInterval(f);b.remove()}},35)};timer=setInterval(()=>{drop();time--;$('#mTime').textContent=time;if(time<=0){clearInterval(timer);timer=null;finishGame(Math.max(8,score*2));toast(`Caught ${score} bananas!`)}},700)}
+function initPuzzle(){puzzle=[1,2,3,4,5,6,7,8,0];for(let i=0;i<60+setNo;i++){const z=puzzle.indexOf(0),v=[z-3,z+3,z%3?z-1:-1,z%3<2?z+1:-1].filter(x=>x>=0&&x<9),m=v[Math.floor(Math.random()*v.length)];[puzzle[z],puzzle[m]]=[puzzle[m],puzzle[z]]}renderPuzzle()}
+function renderPuzzle(){$('#gameContent').innerHTML=`<div class="question-count">Board ${setNo} of 20</div><div class="question">Put the numbers in order</div><div class="puzzle">${puzzle.map((n,i)=>`<button class="piece ${n?'':'empty'}" onclick="movePiece(${i})">${n||''}</button>`).join('')}</div>`}
+function movePiece(i){const z=puzzle.indexOf(0),v=[z-3,z+3,z%3?z-1:-1,z%3<2?z+1:-1];if(v.includes(i)){[puzzle[z],puzzle[i]]=[puzzle[i],puzzle[z]];renderPuzzle();if(puzzle.join()==='1,2,3,4,5,6,7,8,0'){finishGame(15);setTimeout(()=>{setNo=p().gameSets.puzzle;initPuzzle()},700)}}}
+function initShape(){selected=null;matched=0;const s=['●','▲','■','★'];$('#gameContent').innerHTML=`<div class="question-count">Set ${setNo} of 20</div><div class="question">Match the same shapes</div><div class="match-board"><div class="match-col">${shuffle(s).map(x=>`<button class="match" data-side="L" data-v="${x}" onclick="shapePick(this)">${x}</button>`).join('')}</div><div class="match-col">${shuffle(s).map(x=>`<button class="match" data-side="R" data-v="${x}" onclick="shapePick(this)">${x}</button>`).join('')}</div></div><div id="gameFeedback" class="feedback"></div>`}
+function shapePick(e){if(e.classList.contains('done'))return;if(!selected){selected=e;e.classList.add('sel');return}if(selected.dataset.side===e.dataset.side){selected.classList.remove('sel');selected=e;e.classList.add('sel');return}if(selected.dataset.v===e.dataset.v){selected.classList.remove('sel');selected.classList.add('done');e.classList.add('done');selected=null;matched++;if(matched===4){finishGame(12);setTimeout(()=>{setNo=p().gameSets.shape;initShape()},700)}}else{selected.classList.remove('sel');selected=null;$('#gameFeedback').textContent='Try again'}}
+function initColour(){const t=colours[(setNo*2)%colours.length],opts=shuffle([t,...shuffle(colours.filter(c=>c[0]!==t[0])).slice(0,3)]);$('#gameContent').innerHTML=`<div class="question-count">Set ${setNo} of 20</div><div class="question">Splash the ${t[0]} colour!</div><div class="splash-grid">${opts.map(c=>`<button class="splash" style="background:${c[1]}" onclick="colourPick('${c[0]}','${t[0]}')">${c[0]}</button>`).join('')}</div><div id="gameFeedback" class="feedback"></div>`}
+function colourPick(c,t){if(c===t){finishGame();$('#gameFeedback').textContent='Correct!';setTimeout(()=>{setNo=p().gameSets.colour;initColour()},650)}else $('#gameFeedback').textContent=`Find ${t}`}
+function openParent(){const x=prompt('Parent lock: What is 6 + 3?');if(x==='9')show('parent');else if(x!==null)toast('Incorrect answer')}
+function renderParent(){const q=p();$('#parentContent').innerHTML=`<h3>${q.name}'s Progress</h3><p><b>Current stage:</b> ${q.currentStage}/50</p><p><b>Total XP:</b> ${q.xp}</p><p><b>Stars:</b> ${q.stars}</p><p><b>Coins:</b> ${q.coins}</p><p><b>Outfits unlocked:</b> ${q.unlocked.length}/12</p><p><b>Saved profiles:</b> ${db.profiles.filter(Boolean).length}/3</p><button class="back" onclick="show('profiles')">Manage Child Profiles</button><p style="margin-top:18px;font-size:12px">All progress is saved automatically on this device.</p>`}
+renderHeader();renderHome();setFlash(p().flash);
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
 
-function initIce(){const target=colours[Math.floor(Math.random()*colours.length)],others=shuffle(colours.filter(c=>c[0]!==target[0])).slice(0,4),opts=shuffle([target,...others]);$('#gameContent').innerHTML=`<div class="instruction">Make a <b>${target[0]}</b> ice cream!</div><div class="ice-stage"><div class="scoop" id="scoop"></div><div class="cone"></div></div><div class="choice-grid">${opts.map(c=>`<button class="color-btn" style="background:${c[1]}" onclick="pickIce('${c[0]}','${c[1]}','${target[0]}')">${c[0]}</button>`).join('')}</div><div class="feedback" id="gameFeedback"></div>`}
-function pickIce(name,hex,target){$('#scoop').style.background=hex;if(name===target){$('#gameFeedback').textContent='✅ Perfect ice cream!';reward();setTimeout(initIce,850)}else{$('#gameFeedback').textContent=`That is ${name}. Try ${target}!`}}
-
-function initBee(){traceIndex=0;const pts=[[8,80],[18,62],[28,72],[38,50],[49,62],[60,42],[71,54],[82,35],[93,24]];$('#gameContent').innerHTML=`<div class="instruction">Trace the dots in order to help Bee reach the flower.</div><div class="trace-area" id="traceArea"><div class="bee" id="bee" style="left:${pts[0][0]}%;top:${pts[0][1]}%">🐝</div>${pts.map((p,i)=>`<div class="trace-dot" data-i="${i}" style="left:${p[0]}%;top:${p[1]}%;${i===0?'background:#f59e0b':''}"></div>`).join('')}<div class="flower">🌸</div></div><div class="feedback" id="gameFeedback">Start at the orange dot.</div>`;const area=$('#traceArea');const move=e=>{e.preventDefault?.();const t=e.touches?e.touches[0]:e,d=$$('.trace-dot')[traceIndex];if(!d)return;const dr=d.getBoundingClientRect(),dx=t.clientX-(dr.left+dr.width/2),dy=t.clientY-(dr.top+dr.height/2);if(Math.hypot(dx,dy)<38){d.style.background='#22c55e';traceIndex++;$('#bee').style.left=d.style.left;$('#bee').style.top=d.style.top;if(traceIndex===$$('.trace-dot').length){$('#gameFeedback').textContent='🌸 Bee found the flower!';reward(2)}}};area.addEventListener('pointerdown',move);area.addEventListener('pointermove',move);area.addEventListener('touchmove',move,{passive:false})}
-
-function initMonkey(){let score=0,time=20;$('#gameContent').innerHTML=`<div class="instruction">Drag the monkey and catch as many bananas as possible!</div><div class="scorebig">🍌 <span id="mScore">0</span> &nbsp; ⏱️ <span id="mTime">20</span>s</div><div class="monkey-stage" id="monkeyStage"><div class="monkey" id="monkey">🐒</div></div>`;const st=$('#monkeyStage'),mon=$('#monkey');const move=e=>{e.preventDefault?.();const r=st.getBoundingClientRect(),t=e.touches?e.touches[0]:e,x=Math.max(35,Math.min(r.width-35,t.clientX-r.left));mon.style.left=x+'px'};st.addEventListener('pointerdown',move);st.addEventListener('pointermove',move);st.addEventListener('touchmove',move,{passive:false});const drop=()=>{const b=document.createElement('div');b.className='banana';b.textContent='🍌';b.style.left=(10+Math.random()*80)+'%';st.appendChild(b);let y=-45;const fall=setInterval(()=>{y+=6;b.style.top=y+'px';const br=b.getBoundingClientRect(),mr=mon.getBoundingClientRect();if(br.bottom>mr.top&&br.left<mr.right&&br.right>mr.left){score++;$('#mScore').textContent=score;clearInterval(fall);b.remove()}else if(y>st.clientHeight){clearInterval(fall);b.remove()}},35)};monkeyTimer=setInterval(()=>{drop();time--;$('#mTime').textContent=time;if(time<=0){clearInterval(monkeyTimer);monkeyTimer=null;$('#rewardText').textContent=`You caught ${score} bananas!`;reward(Math.max(1,Math.floor(score/3)));setTimeout(()=>show('reward'),500)}},700)}
-
-function initPuzzle(){puzzleArr=[1,2,3,4,5,6,7,8,0];for(let i=0;i<80;i++){const z=puzzleArr.indexOf(0),moves=[z-3,z+3,z%3?z-1:-1,z%3<2?z+1:-1].filter(x=>x>=0&&x<9),m=moves[Math.floor(Math.random()*moves.length)];[puzzleArr[z],puzzleArr[m]]=[puzzleArr[m],puzzleArr[z]]}renderPuzzle()}
-function renderPuzzle(){$('#gameContent').innerHTML=`<div class="instruction">Slide the pieces into order: 1 → 8.</div><div class="puzzle">${puzzleArr.map((n,i)=>`<button class="piece ${n===0?'empty':''}" onclick="movePiece(${i})">${n||''}</button>`).join('')}</div><div class="feedback">Tap a piece beside the empty space.</div>`}
-function movePiece(i){const z=puzzleArr.indexOf(0),valid=[z-3,z+3,z%3?z-1:-1,z%3<2?z+1:-1];if(valid.includes(i)){[puzzleArr[z],puzzleArr[i]]=[puzzleArr[i],puzzleArr[z]];renderPuzzle();if(puzzleArr.join()==='1,2,3,4,5,6,7,8,0'){toast('Puzzle completed! 🧩');reward(3)}}}
-
-function initShapeMatch(){selectedShape=null;matched=0;const shapes=['●','▲','■','★'],left=shuffle(shapes),right=shuffle(shapes);$('#gameContent').innerHTML=`<div class="instruction">Tap the same shape on both sides.</div><div class="match-board"><div class="match-col">${left.map(s=>`<button class="match-card" data-shape="${s}" data-side="L" onclick="shapePick(this)">${s}</button>`).join('')}</div><div class="match-col">${right.map(s=>`<button class="match-card" data-shape="${s}" data-side="R" onclick="shapePick(this)">${s}</button>`).join('')}</div></div><div class="feedback" id="gameFeedback"></div>`}
-function shapePick(el){if(el.classList.contains('done'))return;if(!selectedShape){selectedShape=el;el.classList.add('selected');return}if(selectedShape.dataset.side===el.dataset.side){selectedShape.classList.remove('selected');selectedShape=el;el.classList.add('selected');return}if(selectedShape.dataset.shape===el.dataset.shape){selectedShape.classList.remove('selected');selectedShape.classList.add('done');el.classList.add('done');matched++;$('#gameFeedback').textContent='✅ Same shape!';selectedShape=null;if(matched===4){reward(2);setTimeout(initShapeMatch,850)}}else{$('#gameFeedback').textContent='Different shapes. Try again!';selectedShape.classList.remove('selected');selectedShape=null}}
-
-function initColour(){const target=colours[Math.floor(Math.random()*colours.length)],distractors=shuffle(colours.filter(c=>c[0]!==target[0])).slice(0,3),opts=shuffle([target,...distractors]);$('#gameContent').innerHTML=`<div class="instruction">Find the <b>${target[0]}</b> colour. Tap the matching splash!</div><div class="splash-board">${opts.map(c=>`<button class="splash-card" style="background:${c[1]}" onclick="colourPick('${c[0]}','${target[0]}')">${c[0]}</button>`).join('')}</div><div class="feedback" id="gameFeedback"></div>`}
-function colourPick(c,t){if(c===t){$('#gameFeedback').textContent='✅ Correct colour!';reward();setTimeout(initColour,800)}else{$('#gameFeedback').textContent=`That is ${c}. Find ${t}!`}}
-
-function parentLock(){const x=prompt('Parent lock: What is 7 + 2?');if(x==='9')alert(`Parent area unlocked.\nStars: ${state.stars}\nCoins: ${state.coins}\nUnlocked outfits: ${state.unlocked.length}/${professions.length}\nProgress is saved on this device.`);else if(x!==null)toast('Incorrect answer')}
-renderEverywhere();renderAvatarPage();flashMove(0);
 </script>
 </body></html>

@@ -1,9 +1,9 @@
 {
-  "name": "SMART MATH x RARA Gold Edition 3.0",
+  "name": "SMART MATH x RARA Gold Edition 4.1",
   "short_name": "Math x Rara",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#4c1d95",
-  "theme_color": "#5b21b6",
-  "orientation": "portrait"
+  "orientation": "any",
+  "background_color": "#16052d",
+  "theme_color": "#34105d"
 }
