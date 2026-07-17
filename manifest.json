@@ -1,11 +1,1 @@
-{
-  "name": "SMART MATH x RARA Gold Play & Deco V5",
-  "short_name": "Math x Rara",
-  "start_url": "./index.html",
-  "scope": "./",
-  "display": "standalone",
-  "background_color": "#2b0a4b",
-  "theme_color": "#4b1688",
-  "orientation": "portrait-primary",
-  "icons": []
-}
+{"name":"SMART MATH x RARA Gold","short_name":"Math x Rara","start_url":"./","display":"standalone","background_color":"#2b0a4b","theme_color":"#6423a8"}
