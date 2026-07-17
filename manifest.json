@@ -1,10 +1,9 @@
 {
-  "name":"SMART MATH x RARA Gold Edition 5.0",
-  "short_name":"Math x Rara",
-  "start_url":"./index.html",
-  "display":"standalone",
-  "background_color":"#17052d",
-  "theme_color":"#34105d",
-  "description":"Premium offline-friendly maths learning app for children aged 4–6.",
-  "icons":[{"src":"assets/girl_avatar.jpg","sizes":"512x512","type":"image/jpeg","purpose":"any maskable"}]
+  "name": "SMART MATH x RARA Gold Edition",
+  "short_name": "Math x Rara",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ede9fe",
+  "theme_color": "#6d28d9",
+  "icons": []
 }
