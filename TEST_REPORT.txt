@@ -1,17 +1,17 @@
-SMART MATH × RARA GOLD EDITION 5 — QA CHECKLIST
+SMART MATH x RARA GOLD EDITION 5.0 — BUILD CHECK
 
-✓ Responsive single-column phone layout and two-column Chromebook layout
-✓ No absolute-positioned dashboard cards over the mascot
-✓ 50 staged learning curriculum
-✓ Counting, number sense, addition, subtraction, measurement, patterns, shapes, time and days
-✓ Flashcards 1–100 with English voice
-✓ Bee path reaches flower
-✓ Catch Banana includes rare items, bomb, timer bonus and Next Round button
-✓ Puzzle simplified to 2×2
-✓ Shape Match preserved
-✓ Colour game upgraded to colour memory
-✓ 12 profession outfits with child-friendly career descriptions
-✓ Maximum 3 child profiles
-✓ Coins, stars, gems, XP and auto-save
-✓ Parent lock and progress report
-✓ Offline service worker
+[PASS] Required files present: index.html, manifest.json, sw.js, assets
+[PASS] 12 profession outfit entries present
+[PASS] 50 learning stages generated
+[PASS] 10 questions per learning stage
+[PASS] Flashcards 1–100
+[PASS] Ice cream scoop changes colour
+[PASS] Bee trace uses ordered dots and dotted guide path
+[PASS] Catch Banana includes banana, diamond, clock and bomb
+[PASS] Puzzle is 2x2 drag-and-drop plus tap fallback for phones
+[PASS] Shape Match requires matching identical shapes
+[PASS] Colour game replaced with Colour Memory
+[PASS] 3 child profiles maximum
+[PASS] Parent lock and progress dashboard
+[PASS] Auto-save for progress, rewards, outfits and profiles
+[PASS] Service worker and PWA manifest included
