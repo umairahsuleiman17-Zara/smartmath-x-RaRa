@@ -1,25 +1,15 @@
-SMART MATH x RARA — GOLD EDITION 5.0
+SMART MATH x RARA — GOLD EDITION 5.1 (AVATAR ENGINE BUILD)
 
-UPLOAD:
-1. Upload every file and the complete assets folder to GitHub.
-2. Deploy the repository to Netlify.
-3. Do not rename the assets folder or image files.
-
-FEATURES:
-- 50 generated learning stages, 10 questions per stage
-- Counting, comparison, addition, subtraction, measurement, patterns, 2D/3D shapes, time and weekdays
-- Flashcards 1–100 with speech
-- Ice Cream Builder with real colour change
-- Bee Trace with dotted path and touch/pointer tracing
-- Catch Banana with bananas, diamond, clock bonus, bombs, lives and next round
-- Real 2x2 drag/tap puzzle
-- Shape Match
-- Colour Memory pairs
-- Coins, stars, gems, XP, daily gift
-- Up to 3 child profiles
-- Parent lock and progress report
-- Auto-save via localStorage
-- Offline PWA cache through sw.js
+This build adds a proper gender-specific profession avatar engine:
+- Girl and Boy use separate artwork for every profession.
+- Outfit unlock and selection are saved per child profile.
+- Top bar, profile cards and profession strip update from the selected child and outfit.
+- Missing premium PNGs safely fall back to the older built-in images, so the app remains usable.
 
 IMPORTANT:
-Browser speech depends on the device's installed voices. On iPhone, sound may require one screen tap first.
+The final original 24 profession PNG artworks are not included yet. They must be placed under:
+assets/avatars/girl/
+assets/avatars/boy/
+See assets/avatars/ASSET_REQUIREMENTS.txt for exact filenames and standards.
+
+Do not sell this build as the final commercial avatar edition until those original PNG assets are inserted.
