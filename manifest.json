@@ -1,1 +1,9 @@
-{"name":"SMART MATH × RARA","short_name":"Math Rara","start_url":"./","display":"standalone","background_color":"#35105d","theme_color":"#35105d"}
+{
+  "name": "SMART MATH x RARA Gold Edition",
+  "short_name": "Math x Rara",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#60209a",
+  "theme_color": "#60209a",
+  "icons": []
+}
