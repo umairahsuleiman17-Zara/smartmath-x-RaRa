@@ -1,18 +1,10 @@
-SMART MATH × RARA — GOLD EDITION 4.1
+SMART MATH × RARA GOLD EDITION 5
 
-UPLOAD TO GITHUB
-1. Open this extracted folder.
-2. Press Ctrl+A.
-3. Upload every file together to the ROOT of your GitHub repository.
-4. Do not create an assets folder. All JPG files stay beside index.html.
-5. Commit the files, then deploy the repository on Netlify.
+UPLOAD TO GITHUB:
+1. Extract this ZIP.
+2. Open the extracted folder.
+3. Press Ctrl+A.
+4. Upload every file directly into the repository root.
+5. Commit changes. Netlify will publish automatically.
 
-SUPPORTED SCREENS
-- iPhone / Android portrait
-- Tablet
-- Chromebook / laptop
-
-IMPORTANT
-- Progress is saved in the browser on each device.
-- Progress does not automatically sync between iPhone and Chromebook.
-- Offline mode starts working after the app has been opened online once.
+Important: index.html, manifest.json, sw.js and all JPG files must stay together in the same level.
