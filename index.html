@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#4b0f73">
-<title>SMART MATH x RARA — v5.2</title>
+<title>SMART MATH x RARA — v7.0</title>
 <link rel="manifest" href="manifest.json">
 <style>
 :root{
@@ -106,7 +106,7 @@ button{cursor:pointer}
 <header class="topbar">
   <div>
     <div class="brand"><span>SMART</span> <span>MATH</span> <span>x RARA</span></div>
-    <div class="edition">⭐ VERSION 5.2 ⭐</div>
+    <div class="edition">⭐ VERSION 7.0 ⭐</div>
   </div>
   <div class="stats">
     <button class="stat">⭐ <span id="stars">0</span></button>
@@ -116,7 +116,7 @@ button{cursor:pointer}
   </div>
 </header>
 
-<section id="home" class="screen active">
+<section id="home" class="screen active"><div class="glass" style="margin-top:14px;padding:12px;text-align:center;border:3px solid #facc15"><b>🧪 TEST BUILD v7.0</b><br><small>For functional testing only — not labelled final or ready for sale.</small></div>
   <div class="hero">
     <div class="hero-main glass">
       <div class="logo-title"><div class="smart">SMART</div><div class="math">MATH</div><div class="raraTxt">x RARA</div></div>
@@ -150,7 +150,7 @@ button{cursor:pointer}
   </div>
 
   <div class="section-card glass">
-    <div class="section-title"><h2>Play & Learn</h2><b>50 step-by-step stages</b></div>
+    <div class="section-title"><h2>Play & Learn</h2><b>50 step-by-step stages</b></div><div class="glass" style="margin:10px 0;padding:12px;text-align:center"><b>TEST BUILD v7.0 · 50 Learning Stages · 8 Mini Games</b></div>
     <div class="quick-grid">
       <button class="tile learnT" onclick="openStage(1)">🍎 Counting</button>
       <button class="tile flashT" onclick="openStage(11)">➕ Addition</button>
@@ -162,7 +162,7 @@ button{cursor:pointer}
 
 <section id="learn" class="screen"><div class="section-card glass">
   <div class="section-title"><button class="btn secondary" onclick="show('home')">← Home</button><h2>50 Learning Stages</h2><b><span id="doneCount">0</span>/50</b></div>
-  <div id="stageGrid" class="learning-map"></div>
+  <div class="glass" style="padding:12px;margin:12px 0"><b>Stage map:</b> 1–5 Counting · 6–10 Number Sense · 11–15 Addition · 16–20 Subtraction · 21–25 Measurement · 26–30 Patterns · 31–35 2D Shapes · 36–40 3D Shapes · 41–45 Time of Day · 46–50 Days of Week</div><div id="stageGrid" class="learning-map"></div>
 </div></section>
 
 <section id="lesson" class="screen"><div class="section-card glass">
@@ -180,7 +180,7 @@ button{cursor:pointer}
 </div></section>
 
 <section id="games" class="screen"><div class="section-card glass">
-  <div class="section-title"><button class="btn secondary" onclick="show('home')">← Home</button><h2>Mini Games</h2><b>Fun & educational</b></div>
+  <div class="section-title"><button class="btn secondary" onclick="show('home')">← Home</button><h2>8 Mini Games</h2><b>All eight visible below</b></div>
   <div class="game-grid">
     <button class="game-card glass" onclick="startGame('trace')"><div class="ico">🐝</div><h3>Bee Trace</h3><p>Trace the dotted route to the flower.</p></button>
     <button class="game-card glass" onclick="startGame('catch')"><div class="ico">🐵</div><h3>Catch Banana</h3><p>Catch bananas, rare items, gems and time bonuses.</p></button>
@@ -228,8 +228,8 @@ button{cursor:pointer}
 <div id="profileModal" class="modal"><div class="modal-box glass"><h2>Child Profiles (maximum 3)</h2><div id="profileGrid" class="profile-grid"></div><input id="newProfile" class="field" maxlength="16" placeholder="Child name"><div style="display:flex;gap:10px"><button class="btn success" onclick="addProfile()">Add Profile</button><button class="btn secondary" onclick="closeModal('profileModal')">Close</button></div></div></div>
 
 <script>
-const KEY='smxr_v6_1';
-const LEGACY_KEYS=['smxr_v6_0','smxr_v5_2','smxr_v5_1','smxr_gold_final_v1'];
+const KEY='smxr_v7_0';
+const LEGACY_KEYS=['smxr_v6_3','smxr_v6_2','smxr_v6_1','smxr_v6_0','smxr_v5_2','smxr_v5_1','smxr_gold_final_v1'];
 const categories=['Counting','Number Sense','Addition','Subtraction','Measurement','Patterns','2D Shapes','3D Shapes','Time of Day','Days of Week'];
 const professions=[
  ['Casual','🧕',0,'Rara is ready to learn and play.'],
@@ -243,12 +243,14 @@ const professions=[
  ['Engineer','👷‍♀️',170,'Engineers design and build useful things.'],
  ['Scientist','👩‍🔬',150,'Scientists ask questions, test ideas and discover answers.'],
  ['Artist','👩‍🎨',120,'Artists share ideas through colour and imagination.'],
- ['Farmer','👩‍🌾',120,'Farmers grow food and care for animals and plants.']
+ ['Farmer','👩‍🌾',120,'Farmers grow food and care for animals and plants.'],
+ ['Veterinarian','👩‍⚕️🐾',160,'Veterinarians care for animals and help them stay healthy.']
 ];
-const defaultProfile=()=>({stars:0,coins:0,gems:0,xp:0,completed:[],sound:true,unlocked:['Casual'],equipped:'Casual',streak:1,lastOpen:new Date().toDateString(),lastGift:''});
+const defaultProfile=()=>({stars:0,coins:0,gems:0,xp:0,completed:[],sound:true,unlocked:['Casual'],equipped:'Casual',streak:1,lastOpen:new Date().toDateString(),lastGift:'',correct:0,wrong:0,gamesCompleted:{}});
 let saved=localStorage.getItem(KEY);
 if(!saved){for(const k of LEGACY_KEYS){if(localStorage.getItem(k)){saved=localStorage.getItem(k);break}}}
 let app=JSON.parse(saved||'null')||{active:0,profiles:[{name:'Qaisara',data:defaultProfile()}]};
+app.profiles.forEach(profile=>{const d=profile.data||defaultProfile();profile.data={...defaultProfile(),...d,gamesCompleted:{...(d.gamesCompleted||{})}}});
 let currentStage=1,currentAnswer=0,card=1,lockAns=0,gameTimer=null,gameScoreN=0,gameIntervals=[],gameTimeouts=[],gameCompleted=false;
 const $=id=>document.getElementById(id);
 const P=()=>app.profiles[app.active].data;
@@ -262,7 +264,7 @@ function rand(a,b){return Math.floor(Math.random()*(b-a+1))+a}
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function reward(coins=10,gems=0,stars=0,xp=10){let p=P();p.coins+=coins;p.gems+=gems;p.stars+=stars;p.xp+=xp;save()}
 function claimGift(){let today=new Date().toDateString();if(P().lastGift===today){toastMsg('Daily gift already claimed today');return}P().lastGift=today;reward(50,1,2,25);toastMsg('Daily Gift: 🪙50 ⭐2 💎1');speak('Your daily gift is ready. Great job!')}
-function renderStages(){let g=$('stageGrid');g.innerHTML='';for(let i=1;i<=50;i++){let cat=categories[Math.floor((i-1)/5)],b=document.createElement('button');b.className='stage '+(P().completed.includes(i)?'done':'');b.innerHTML='<strong>'+i+(P().completed.includes(i)?' ✓':'')+'</strong><small>'+cat+'</small>';b.onclick=()=>openStage(i);g.appendChild(b)}$('doneCount').textContent=P().completed.length}
+function renderStages(){let g=$('stageGrid');g.innerHTML='';for(let i=1;i<=50;i++){let cat=categories[Math.floor((i-1)/5)],done=P().completed.includes(i),unlocked=i===1||P().completed.includes(i-1),b=document.createElement('button');b.className='stage '+(done?'done ':'')+(unlocked?'':'locked');b.disabled=!unlocked;b.innerHTML='<strong>'+i+(done?' ✓':unlocked?'':' 🔒')+'</strong><small>'+cat+'</small>';b.onclick=()=>openStage(i);g.appendChild(b)}$('doneCount').textContent=P().completed.length}
 function openStage(i){currentStage=i;show('lesson');$('lessonLabel').textContent='Stage '+i+' · '+categories[Math.floor((i-1)/5)];makeQuestion()}
 function makeQuestion(){
  let cat=categories[Math.floor((currentStage-1)/5)],a,b,q,v='',opts=[];
@@ -280,14 +282,14 @@ function makeQuestion(){
  if(!opts.length){opts=[currentAnswer];let pool=typeof currentAnswer==='number'?[Math.max(0,currentAnswer-1),currentAnswer+1,currentAnswer+2]:['Circle','Square','Triangle','Rectangle','Cube','Sphere','Cone','Cuboid','Morning','Afternoon','Night','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday','Yes','No','🔴','🔵','⭐','🌙','🔺','🟩'];while(opts.length<3){let z=typeof currentAnswer==='number'?Math.max(0,currentAnswer+rand(-4,4)):pool[rand(0,pool.length-1)];if(!opts.includes(z))opts.push(z)}}
  let box=$('lessonAnswers');box.innerHTML='';shuffle(opts.slice(0,3)).forEach(x=>{let b=document.createElement('button');b.className='answer';b.textContent=x;b.onclick=()=>checkAnswer(b,x);box.appendChild(b)});speakQuestion()
 }
-function checkAnswer(btn,x){document.querySelectorAll('.answer').forEach(b=>b.disabled=true);if(String(x)===String(currentAnswer)){btn.classList.add('correct');let p=P();reward(5,0,1,20);if(!p.completed.includes(currentStage)){p.completed.push(currentStage);if(currentStage%5===0)p.gems+=1;save()}toastMsg('Great job! ⭐ +1 🪙 +5');speak('Great job!')}else{btn.classList.add('wrong');[...document.querySelectorAll('.answer')].find(b=>String(b.textContent)===String(currentAnswer))?.classList.add('correct');toastMsg('Good try. Answer: '+currentAnswer);speak('Good try. The answer is '+currentAnswer)}}
+function checkAnswer(btn,x){document.querySelectorAll('.answer').forEach(b=>b.disabled=true);if(String(x)===String(currentAnswer)){btn.classList.add('correct');let p=P();p.correct=(p.correct||0)+1;reward(5,0,1,20);if(!p.completed.includes(currentStage)){p.completed.push(currentStage);if(currentStage%5===0)p.gems+=1;save()}toastMsg('Great job! ⭐ +1 🪙 +5');speak('Great job!')}else{P().wrong=(P().wrong||0)+1;save();btn.classList.add('wrong');[...document.querySelectorAll('.answer')].find(b=>String(b.textContent)===String(currentAnswer))?.classList.add('correct');toastMsg('Good try. Answer: '+currentAnswer);speak('Good try. The answer is '+currentAnswer)}}
 function speakQuestion(){speak($('lessonQuestion').textContent)}
 const numberWords=['ZERO','ONE','TWO','THREE','FOUR','FIVE','SIX','SEVEN','EIGHT','NINE','TEN','ELEVEN','TWELVE','THIRTEEN','FOURTEEN','FIFTEEN','SIXTEEN','SEVENTEEN','EIGHTEEN','NINETEEN','TWENTY'];
 function wordNum(n){return n<=20?numberWords[n]:String(n)}function showCard(){$('bigNumber').textContent=card;$('cardNo').textContent=card;$('cardWord').textContent=wordNum(card);$('cardDots').textContent='⭐'.repeat(Math.min(card,10))}function nextCard(){card=card===100?1:card+1;showCard();speakCard()}function prevCard(){card=card===1?100:card-1;showCard();speakCard()}function speakCard(){speak(String(card))}
 function startGame(type){show('gamePlay');stopGame();gameScoreN=0;gameCompleted=false;$('gameScore').textContent='Score: 0';({trace:startTrace,catch:startCatch,puzzle:startPuzzle,shape:startShape,memory:startMemory,balloon:startBalloon,train:startTrain,difference:startDifference})[type]()}
 function trackInterval(id){gameIntervals.push(id);return id}
 function trackTimeout(id){gameTimeouts.push(id);return id}
-function completeGame(message,coins=15,gems=1,stars=1,xp=20){if(gameCompleted)return;gameCompleted=true;reward(coins,gems,stars,xp);$('gameScore').textContent='Completed!';toastMsg(message);speak(message)}
+function completeGame(message,coins=15,gems=1,stars=1,xp=20){if(gameCompleted)return;gameCompleted=true;const gameName=$('gameTitle').textContent;P().gamesCompleted[gameName]=(P().gamesCompleted[gameName]||0)+1;reward(coins,gems,stars,xp);$('gameScore').textContent='Completed!';toastMsg(message);speak(message)}
 function stopGame(){clearInterval(gameTimer);gameTimer=null;gameIntervals.forEach(clearInterval);gameTimeouts.forEach(clearTimeout);gameIntervals=[];gameTimeouts=[];const area=$('gameArea');if(area)area.innerHTML=''}
 function startTrace(){
  $('gameTitle').textContent='Bee Trace';$('gameArea').innerHTML='<p>Touch or drag across every dot in order until the bee reaches the flower.</p><div class="trace-board" id="tb"><span style="position:absolute;left:8px;bottom:8px;font-size:48px">🐝</span><span style="position:absolute;right:8px;top:8px;font-size:48px">🌼</span></div>';
@@ -344,8 +346,8 @@ function buyProf(name,cost){let p=P();if(p.unlocked.includes(name)){p.equipped=n
 function parentLock(){lockAns=rand(12,30);let a=rand(3,lockAns-3);$('lockQ').textContent=a+' + '+(lockAns-a)+' = ?';$('lockInput').value='';$('lockModal').classList.add('show')}
 function unlockParent(){if(+$('lockInput').value===lockAns){closeModal('lockModal');show('parent')}else toastMsg('Please try again')}
 function closeModal(id){$(id).classList.remove('show')}
-function renderReport(){let p=P(),cats={};categories.forEach((c,i)=>cats[c]=p.completed.filter(x=>Math.floor((x-1)/5)===i).length);$('report').innerHTML='<h3>'+app.profiles[app.active].name+'’s Progress</h3><p><b>'+p.completed.length+'/50 stages completed</b> · '+p.stars+' stars · '+p.coins+' coins · '+p.gems+' gems · '+p.xp+' XP</p>'+Object.entries(cats).map(([k,v])=>'<div style="margin:8px 0">'+k+': <b>'+v+'/5</b><div class="progressbar"><div style="width:'+(v/5*100)+'%"></div></div></div>').join('')}
-function exportReport(){let p=P(),txt='SMART MATH x RARA — Progress Report\nChild: '+app.profiles[app.active].name+'\nCompleted: '+p.completed.length+'/50\nStars: '+p.stars+'\nCoins: '+p.coins+'\nGems: '+p.gems+'\nXP: '+p.xp+'\nDate: '+new Date().toLocaleDateString();let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain'}));a.download='SMART_MATH_x_RARA_Progress_Report.txt';a.click()}
+function renderReport(){let p=P(),cats={};categories.forEach((c,i)=>cats[c]=p.completed.filter(x=>Math.floor((x-1)/5)===i).length);let total=(p.correct||0)+(p.wrong||0),accuracy=total?Math.round((p.correct||0)/total*100):0,favourite=Object.entries(p.gamesCompleted||{}).sort((a,b)=>b[1]-a[1])[0]?.[0]||'Not played yet';$('report').innerHTML='<p><b>Build: v7.0</b></p><h3>'+app.profiles[app.active].name+'’s Progress</h3><p><b>'+p.completed.length+'/50 stages completed</b> · '+p.stars+' stars · '+p.coins+' coins · '+p.gems+' gems · '+p.xp+' XP</p><div class="glass" style="padding:14px;margin:12px 0"><b>Learning accuracy: '+accuracy+'%</b><br><small>Correct: '+(p.correct||0)+' · Try again: '+(p.wrong||0)+' · Favourite game: '+favourite+'</small></div>'+Object.entries(cats).map(([k,v])=>'<div style="margin:8px 0">'+k+': <b>'+v+'/5</b><div class="progressbar"><div style="width:'+(v/5*100)+'%"></div></div></div>').join('')}
+function exportReport(){let p=P(),txt='SMART MATH x RARA v7.0 — Progress Report\nChild: '+app.profiles[app.active].name+'\nCompleted: '+p.completed.length+'/50\nCorrect answers: '+(p.correct||0)+'\nTry again answers: '+(p.wrong||0)+'\nStars: '+p.stars+'\nCoins: '+p.coins+'\nGems: '+p.gems+'\nXP: '+p.xp+'\nDate: '+new Date().toLocaleDateString();let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain'}));a.download='SMART_MATH_x_RARA_Progress_Report.txt';a.click()}
 function resetData(){if(confirm('Reset this child profile progress?')){app.profiles[app.active].data=defaultProfile();save();renderReport()}}
 function openProfiles(){renderProfiles();$('profileModal').classList.add('show')}
 function renderProfiles(){let g=$('profileGrid');g.innerHTML='';app.profiles.forEach((p,i)=>{let d=document.createElement('button');d.className='profile glass';d.innerHTML='<div style="font-size:45px">🧒</div><b>'+p.name+'</b><br><small>'+(i===app.active?'Active':'Tap to select')+'</small>';d.onclick=()=>{app.active=i;save();renderProfiles()};g.appendChild(d)})}

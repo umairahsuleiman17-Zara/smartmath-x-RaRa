@@ -1,9 +1,11 @@
 {
-  "name": "SMART MATH x RARA v6.1",
-  "short_name": "SMART MATH v6.1",
-  "start_url": "./index.html",
+  "name": "SMART MATH x RARA v7.0",
+  "short_name": "SMART MATH",
+  "description": "Test build v7.0 for children aged 4–6.",
+  "start_url": "./index.html?v=7.0",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#26043f",
   "theme_color": "#4b0f73",
-  "description": "Fun early maths learning app for ages 4\u20136."
+  "orientation": "portrait-primary"
 }
