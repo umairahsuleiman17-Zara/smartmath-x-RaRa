@@ -1,22 +1,15 @@
-SMART MATH x RARA — Gold Edition 5.1
+SMART MATH x RARA — v6.1
 
-UPLOAD:
-1. Unzip this folder.
-2. Upload index.html, manifest.json and sw.js to the ROOT of your GitHub repository.
-3. Deploy that repository on Netlify.
-4. Do not upload the ZIP itself into the site folder.
+TEST BUILD — version code only. Not labelled final or ready for sale.
 
-FEATURES:
-- 50 learning stages
-- Number flashcards 1–100
-- 6 playable games
-- 12 profession outfits
-- Coins, stars, gems and XP
+Included in this build:
+- 50 learning stage structure across 10 topics
+- Exactly 8 mini games: Bee Trace, Catch Banana, Puzzle 2x2, Shape Match, Colour Memory, Counting Balloon, Number Train, Find the Difference
 - Up to 3 child profiles
-- Parent lock and downloadable progress report
-- Auto-save using browser localStorage
-- Offline cache after first successful load
-- English voice guidance where supported
+- Parent lock and progress report
+- Coins, stars, gems, XP and daily gift
+- 12 profession choices (emoji-based placeholders in this build)
+- Autosave and offline PWA files
 
-NOTE:
-Browser voices differ by device. On iPhone, sound begins after the child taps a button because of browser autoplay rules.
+Important testing note:
+The premium illustrated Rara and profession artwork assets are not yet included. Test the learning flow, games, saving and mobile controls.

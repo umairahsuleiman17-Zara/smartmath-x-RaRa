@@ -1,9 +1,9 @@
 {
-  "name": "SMART MATH x RARA Gold Edition",
-  "short_name": "Math x Rara",
+  "name": "SMART MATH x RARA v6.1",
+  "short_name": "SMART MATH v6.1",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#ede9fe",
-  "theme_color": "#6d28d9",
-  "icons": []
+  "background_color": "#26043f",
+  "theme_color": "#4b0f73",
+  "description": "Fun early maths learning app for ages 4\u20136."
 }
